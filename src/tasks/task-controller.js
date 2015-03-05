@@ -3,11 +3,11 @@ app.config(['$routeProvider', function ($routeProvider) {
     templateUrl: 'static/tasks/tasks.html',
     controller: 'TaskCtrl',
     controllerAs: 'vm',
-    // resolve: {
-    //   tasks: ['taskService', function (taskService) {
-    //     return taskService.getTaskList();
-    //   }]
-    // }
+    resolve: {
+      tasks: ['taskService', function (taskService) {
+        return taskService.getTaskList();
+      }]
+    }
   };
 
   $routeProvider.when('/', routeDefinition);

@@ -2,7 +2,7 @@ from flask import Blueprint, flash, jsonify, request
 from datetime import datetime
 
 from .models import Task
-from .extensions import db
+from .extensions import db, hasher
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
 
@@ -32,4 +32,4 @@ def add_task():
                     )
     db.session.add(new_task)
     db.session.commit()
-    return jsonify(data), 201
+    return jsonify(new_task), 201

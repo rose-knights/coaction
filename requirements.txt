@@ -38,5 +38,4 @@ flask-bcrypt
 flask-login
 
 # Heroku
-gunicorn==19.2.1
 psycopg2==2.6

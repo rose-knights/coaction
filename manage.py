@@ -38,8 +38,8 @@ def seed():
     tasks = 27
     user = create_specified_user('test@test.com', 'test',
                                  'Test', 'testusername')
-    for count in tasks:
-        create_items(user.id)
+    for count in range(tasks):
+        create_task(user.id)
 
     print('Tasks: {} Username: {}'.format(tasks, user.username))
 

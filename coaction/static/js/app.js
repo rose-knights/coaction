@@ -21,8 +21,38 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-app.factory('taskService', ['$http', function($http) {
-  
+app.factory('taskService', ['$http', '$log', function($http, $log) {
+
+  function get(url) {
+    return processAjaxPromise($http.get(url));
+  }
+
+  function post(url, task) {
+    return processAjaxPromise($http.post(url, task));
+  }
+
+  function processAjaxPromise(p) {
+    return p.then(function (result) {
+      return result.data;
+    })
+    .catch(function (error) {
+      $log.log(error);
+    });
+  }
+
+  return {
+    getTaskList: function () {
+      return get('/tasks');
+    },
+
+    getTaskById: function (id) {
+      return get('/tasks/' + id);
+    },
+
+    addTask: function (task) {
+      return post('/tasks', task);
+    }
+  }
 }]);
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -30,11 +60,11 @@ app.config(['$routeProvider', function ($routeProvider) {
     templateUrl: 'static/tasks/tasks.html',
     controller: 'TaskCtrl',
     controllerAs: 'vm',
-    resolve: {
-      tasks: ['taskService', function (taskService) {
-        return taskService.getTaskList();
-      }]
-    }
+    // resolve: {
+    //   tasks: ['taskService', function (taskService) {
+    //     return taskService.getTaskList();
+    //   }]
+    // }
   };
 
   $routeProvider.when('/', routeDefinition);

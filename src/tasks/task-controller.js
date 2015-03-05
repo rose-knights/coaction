@@ -1,6 +1,6 @@
 app.config(['$routeProvider', function ($routeProvider) {
   var routeDefinition = {
-    templateUrl: 'static/tasks/tasks.html',
+    templateUrl: 'static/tasks/my-tasks.html',
     controller: 'TaskCtrl',
     controllerAs: 'vm',
     resolve: {
@@ -11,8 +11,8 @@ app.config(['$routeProvider', function ($routeProvider) {
   };
 
   $routeProvider.when('/', routeDefinition);
-  $routeProvider.when('/tasks', routeDefinition);
+  $routeProvider.when('/my-tasks/', routeDefinition);
 }])
-.controller('TaskCtrl', [function () {
+.controller('TaskCtrl', ['taskService', function (taskService) {
 
 }]);

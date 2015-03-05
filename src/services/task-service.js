@@ -19,7 +19,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   return {
     getTaskList: function () {
-      return get('/tasks');
+      return get('/tasks/');
     },
 
     getTaskById: function (id) {

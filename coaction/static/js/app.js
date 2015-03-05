@@ -11,6 +11,15 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/new-task', {
+    controller: 'NewTaskCtrl',
+    controllerAs: 'vm',
+    templateUrl: 'static/new-task.html'
+  });
+}]).controller('NewTaskCtrl', [function () {
+
+}]);
 
 app.factory('taskService', ['$http', function($http) {
   
@@ -31,9 +40,9 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/tasks', routeDefinition);
 }])
-.controller('TaskCtrl', function () {
+.controller('TaskCtrl', [function () {
 
-});
+}]);
 
 app.factory('Task', function () {
   return function (spec) {

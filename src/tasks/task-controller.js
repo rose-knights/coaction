@@ -13,6 +13,6 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/tasks', routeDefinition);
 }])
-.controller('TaskCtrl', function () {
+.controller('TaskCtrl', [function () {
 
-});
+}]);

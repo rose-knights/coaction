@@ -27,9 +27,6 @@ pytest>=2.6.3
 pytest-flask>=0.7.3
 webtest
 
-# Management script
-Flask-Script
-
 # Seed Data
 fake-factory
 
@@ -40,9 +37,6 @@ Flask-Script==2.0.5
 flask-bcrypt
 flask-login
 
-# Config
-flask-appconfig==0.9.1
 
 # Heroku
-gunicorn==19.2.1
 psycopg2==2.6

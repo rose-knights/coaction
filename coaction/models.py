@@ -48,14 +48,24 @@ class Task(db.Model):
     date_due = db.Column(db.Date, nullable=True)
 
     def to_dict(self):
-        return {"id": self.id,
+
+        data = {"id": self.id,
                 "owner_id": self.owner_id,
                 "name": self.name,
                 "status": self.status,
                 "description": self.description,
-                "date_added": self.date_added,
-                "date_completed": self.date_completed,
-                "date_due": self.date_due}
+                "date_added": self.date_added}
+
+        if self.date_completed:
+            data["date_completed"] = datetime.strftime(self.date_completed, )
+        else:
+            data["date_completed"] = None
+        if self.date_due:
+            data["date_due"] = datetime.strftime(self.date_due, )
+        else:
+            data["date_due"] = None
+
+        return data
 
     def __repr__(self):
         return "<name {}>".format(self.name)

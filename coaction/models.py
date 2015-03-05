@@ -9,8 +9,8 @@ def load_user(id):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.string(200), unique=True)
-    email = db.Column(db.tring(120), unique=True)
+    username = db.Column(db.String(200), unique=True)
+    email = db.Column(db.String(120), unique=True)
     name = db.Column(db.String(120))
     encrypted_password = db.Column(db.String(60))
 

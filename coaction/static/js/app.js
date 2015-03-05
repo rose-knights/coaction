@@ -11,6 +11,82 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/new-task', {
+    controller: 'NewTaskCtrl',
+    controllerAs: 'vm',
+    templateUrl: 'static/new-task.html'
+  });
+}]).controller('NewTaskCtrl', [function () {
+
+}]);
+
+app.factory('taskService', ['$http', '$log', function($http, $log) {
+
+  function get(url) {
+    return processAjaxPromise($http.get(url));
+  }
+
+  function post(url, task) {
+    return processAjaxPromise($http.post(url, task));
+  }
+
+  function processAjaxPromise(p) {
+    return p.then(function (result) {
+      return result.data;
+    })
+    .catch(function (error) {
+      $log.log(error);
+    });
+  }
+
+  return {
+    getTaskList: function () {
+      return get('/tasks');
+    },
+
+    getTaskById: function (id) {
+      return get('/tasks/' + id);
+    },
+
+    addTask: function (task) {
+      return post('/tasks', task);
+    }
+  }
+}]);
+
+app.config(['$routeProvider', function ($routeProvider) {
+  var routeDefinition = {
+    templateUrl: 'static/tasks/tasks.html',
+    controller: 'TaskCtrl',
+    controllerAs: 'vm',
+    // resolve: {
+    //   tasks: ['taskService', function (taskService) {
+    //     return taskService.getTaskList();
+    //   }]
+    // }
+  };
+
+  $routeProvider.when('/', routeDefinition);
+  $routeProvider.when('/tasks', routeDefinition);
+}])
+.controller('TaskCtrl', [function () {
+
+}]);
+
+app.factory('Task', function () {
+  return function (spec) {
+    spec || {};
+    return {
+      title: spec.title,
+      description: spec.description,
+      status: spec.status,
+      createdOn: spec.createdOn,
+      dueOn: spec.dueOn
+    };
+  }
+});
+
 app.controller('Error404Ctrl', ['$location', function ($location) {
   this.message = 'Could not find: ' + $location.url();
 }]);

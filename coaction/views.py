@@ -19,6 +19,7 @@ def list_all_tasks():
 
     return jsonify(tasks=tasks), 200
 
+
 @coaction.route("/tasks/", methods=["POST"])
 def add_task():
     data =  {"data": {

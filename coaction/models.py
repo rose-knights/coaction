@@ -30,6 +30,12 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return "<Username {}>".format(self.username)
 
+    def to_dict(self):
+        return {"id": self.id,
+                "username": self.username,
+                "email": self.email,
+                "name": self.name}
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -40,6 +46,16 @@ class Task(db.Model):
     date_added = db.Column(db.Date)
     date_completed = db.Column(db.Date, nullable=True)
     date_due = db.Column(db.Date, nullable=True)
+
+    def to_dict(self):
+        return {"id": self.id,
+                "owner_id": self.owner_id,
+                "name": self.name,
+                "status": self.status,
+                "description": self.description,
+                "date_added": self.date_added,
+                "date_completed": self.date_completed,
+                "date_due": self.date_due}
 
     def __repr__(self):
         return "<name {}>".format(self.name)

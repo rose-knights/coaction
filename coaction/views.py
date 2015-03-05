@@ -33,3 +33,12 @@ def add_task():
     db.session.add(new_task)
     db.session.commit()
     return jsonify(new_task), 201
+
+
+@coaction.route("/tasks/<task_id>")
+def view_task(task_id):
+    """Method: GET
+       Returns all data for a single task from the database."""
+    data = request.get_json()
+    task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
+    return jsonify(task.to_dict())

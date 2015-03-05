@@ -32,3 +32,17 @@ Flask-Script
 
 # Seed Data
 fake-factory
+
+# Flask Script
+Flask-Script==2.0.5
+
+# Extensions
+flask-bcrypt
+flask-login
+
+# Config
+flask-appconfig==0.9.1
+
+# Heroku
+gunicorn==19.2.1
+psycopg2==2.6

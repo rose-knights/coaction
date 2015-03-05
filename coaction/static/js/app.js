@@ -36,7 +36,16 @@ app.config(['$routeProvider', function ($routeProvider) {
 });
 
 app.factory('Task', function () {
-
+  return function (spec) {
+    spec || {};
+    return {
+      title: spec.title,
+      description: spec.description,
+      status: spec.status,
+      createdOn: spec.createdOn,
+      dueOn: spec.dueOn
+    };
+  }
 });
 
 app.controller('Error404Ctrl', ['$location', function ($location) {

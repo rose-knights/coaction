@@ -23,13 +23,13 @@ def create_task(user_id=1):
         date_completed = None
     date_due = fake.date_time_between(start_date="-2d", end_date="+15d")
 
-    item = Item(owner_id = user_id,
+    task = Task(owner_id = user_id,
                 name = name,
                 status = status,
                 description = description,
                 date_added = date_added,
                 date_completed = date_completed,
                 date_due = date_due)
-    db.session.add(item)
+    db.session.add(task)
     db.session.commit()
     return True

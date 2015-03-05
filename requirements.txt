@@ -33,9 +33,6 @@ Flask-Script
 # Seed Data
 fake-factory
 
-# Flask Script
-Flask-Script==2.0.5
-
 # Extensions
 flask-bcrypt
 flask-login

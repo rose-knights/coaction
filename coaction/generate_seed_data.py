@@ -14,8 +14,8 @@ def create_specified_user(email, password, name, username):
 def create_task(user_id=1):
     fake = Factory.create()
     name = fake.text(max_nb_chars=10)
-    status = fake.text(max_nb_chars=20)
-    description = fake.text(max_nb_chars=random.randint(1,500))
+    status = random.choice(['to_do', 'doing', 'done'])
+    description = fake.text(max_nb_chars=random.randint(10,500))
     date_added = fake.date_time_between(start_date="-10d", end_date="now")
     if random.random() > .9:
         date_completed = fake.date_time_between(start_date="-3d", end_date="-1d")

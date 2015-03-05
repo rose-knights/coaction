@@ -15,10 +15,6 @@ SQLAlchemy==0.9.8
 # Migrations
 Flask-Migrate==1.3.0
 
-# Forms
-Flask-WTF==0.11
-WTForms==2.0.2
-
 ## Config
 flask-appconfig==0.9.1
 
@@ -30,13 +26,9 @@ webtest
 # Seed Data
 fake-factory
 
-# Flask Script
-Flask-Script==2.0.5
-
 # Extensions
 flask-bcrypt
 flask-login
-
 
 # Heroku
 psycopg2==2.6

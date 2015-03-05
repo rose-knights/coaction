@@ -4,8 +4,8 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.get(url));
   }
 
-  function post(url, task) {
-    return processAjaxPromise($http.post(url, task));
+  function put(url, task) {
+    return processAjaxPromise($http.put(url, task));
   }
 
   function processAjaxPromise(p) {
@@ -19,7 +19,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   return {
     getTaskList: function () {
-      return get('/tasks/');
+      return get('/tasks');
     },
 
     getTaskById: function (id) {
@@ -27,7 +27,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     addTask: function (task) {
-      return post('/tasks', task);
+      return put('/tasks', task);
     }
   }
 }]);

@@ -29,3 +29,6 @@ webtest
 
 # Management script
 Flask-Script
+
+# Seed Data
+fake-factory

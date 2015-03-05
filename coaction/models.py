@@ -1,6 +1,7 @@
 from .extensions import db, bcrypt, login_manager
 from flask.ext.login import UserMixin
 
+
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
@@ -12,8 +13,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.tring(120), unique=True)
     name = db.Column(db.String(120))
     encrypted_password = db.Column(db.String(60))
-
-    teams = db.relationship('Team')
 
     def get_password(self):
         return getattr(self, "_password", None)
@@ -35,7 +34,6 @@ class User(db.Model, UserMixin):
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    team_name = db.Column(db.Integer, db.ForeignKey('team.name'))
     name = db.Column(db.String(255))
     status = db.Column(db.String(255))
     description = db.Column(db.String(500), nullable=True)
@@ -45,10 +43,3 @@ class Task(db.Model):
 
     def __repr__(self):
         return "<name {}>".format(self.name)
-
-class Team(db.Model):
-    name = db.Column(db.String(120), unique=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return "<team name: {}>".format(self.name)

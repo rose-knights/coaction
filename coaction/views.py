@@ -1,7 +1,8 @@
 from flask import Blueprint, flash, jsonify, request
+from datetime import datetime
 
 from .models import Task
-
+from .extensions import db
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
 
@@ -22,15 +23,13 @@ def list_all_tasks():
 
 @coaction.route("/tasks/", methods=["POST"])
 def add_task():
-    data =  {"data": {
-                      "id": 4,
-                      "name": "Some name",
-                      "status": "to-do",
-                      "date_added": "2015-03-05",
-                      "date_completed": None,
-                      "date_due": None,
-                      "description": None,
-                      "owner_id": 1
-                     }
-            }
+    data = request.get_json()
+    new_task = Task(owner_id=1,
+                    name=data["name"],
+                    status="to_do",
+                    description=None,
+                    date_added=datetime.today().date()
+                    )
+    db.session.add(new_task)
+    db.session.commit()
     return jsonify(data), 201

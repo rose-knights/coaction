@@ -48,25 +48,6 @@ class Task(db.Model):
     date_completed = db.Column(db.Date, nullable=True)
     date_due = db.Column(db.Date, nullable=True)
 
-    def to_dict(self):
-        data= {"id": self.id,
-               "owner_id": self.owner_id,
-               "name": self.name,
-               "status": self.status,
-               "description": self.description,
-               "date_added": datetime.strftime(self.date_added, "%m/%d/%Y")
-              }
-        if self.date_completed:
-            data["date_completed"] = datetime.strftime(self.date_completed,
-                                                       "%m/%d/%Y")
-        else:
-            data["date_completed"] = None
-        if self.date_due:
-            data["date_due"] = datetime.strftime(self.date_due, "%m/%d/%Y")
-        else:
-            data["date_due"] = None
-        return data
-
     def __repr__(self):
         return "<name {}>".format(self.name)
 

@@ -11,6 +11,34 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
+
+app.factory('taskService', ['$http', function($http) {
+  
+}]);
+
+app.config(['$routeProvider', function ($routeProvider) {
+  var routeDefinition = {
+    templateUrl: 'static/tasks/tasks.html',
+    controller: 'TaskCtrl',
+    controllerAs: 'vm',
+    resolve: {
+      tasks: ['taskService', function (taskService) {
+        return taskService.getTaskList();
+      }]
+    }
+  };
+
+  $routeProvider.when('/', routeDefinition);
+  $routeProvider.when('/tasks', routeDefinition);
+}])
+.controller('TaskCtrl', function () {
+
+});
+
+app.factory('Task', function () {
+
+});
+
 app.controller('Error404Ctrl', ['$location', function ($location) {
   this.message = 'Could not find: ' + $location.url();
 }]);

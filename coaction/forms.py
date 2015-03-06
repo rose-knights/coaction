@@ -33,4 +33,4 @@ class AddTask(Form):
 
 
 class AddComment(Form):
-    comment = StringField('Comment', validators=[DataRequired()])
+    text = StringField('Comment', validators=[DataRequired()])

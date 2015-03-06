@@ -3,7 +3,7 @@ from datetime import datetime
 from flask.ext.login import login_user, logout_user
 from flask.ext.login import login_required, current_user
 
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm, AddTask, AddComment
 from .models import Task, Comment
 from .extensions import db, hasher
 
@@ -73,14 +73,17 @@ def add_comment(task_id):
     """Method: POST
        Add comments to a particular task"""
     data = request.get_json()
-    comment = Comment(owner_id=1,
-                      task_id=hasher.decode(task_id)[0],
-                      date=datetime.now(),
-                      text=data["text"])
-    db.session.add(comment)
-    db.session.commit()
-    return jsonify(comment.to_dict()), 201
-
+    form = AddComment(data=data, formdata=None, csrf_enabled=False)
+    if form.validate():
+        comment = Comment(owner_id=1,
+                          task_id=hasher.decode(task_id)[0],
+                          date=datetime.now(),
+                          text=data["text"])
+        db.session.add(comment)
+        db.session.commit()
+        return jsonify(comment.to_dict()), 201
+    else:
+        return jsonify(form.errors), 400
 
 @coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["PUT"])
 def edit_comment(task_id, comment_id):

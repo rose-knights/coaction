@@ -23,6 +23,8 @@ def list_all_tasks():
 
 @coaction.route("/tasks/", methods=["POST"])
 def add_task():
+    """Method: POST
+       Adds new task to the database"""
     data = request.get_json()
     new_task = Task(owner_id=1,
                     name=data["name"],

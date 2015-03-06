@@ -4,5 +4,6 @@
   <li class="task-item" ng-repeat="task in vm.tasks">
     <div class="task-name">{{task.name}}</div>
     <div class="task-status">{{task.status}}</div>
+    <button ng-click="vm.removeTask(task.id)">X</button>
   </li>
 </ul>

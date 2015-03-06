@@ -43,6 +43,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.post(url, task));
   }
 
+  function remove(url) {
+    return processAjaxPromise($http.delete(url));
+  }
+
   function processAjaxPromise(p) {
     return p.then(function (result) {
       var data = result.data;
@@ -65,6 +69,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
     addTask: function (task) {
       return post('/tasks/', task);
+    },
+
+    removeTask: function (id) {
+      return remove('/tasks/', id)
     }
   };
 }]);
@@ -84,10 +92,14 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', ['tasks', function (tasks) {
+.controller('TaskCtrl', ['tasks', 'taskService', function (tasks, taskService) {
   var self = this;
 
   self.tasks = tasks;
+
+  self.removeTask = function (id) {
+    taskService.removeTask(id);
+  }
 
 }]);
 

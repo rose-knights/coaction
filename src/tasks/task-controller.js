@@ -13,9 +13,13 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', ['tasks', function (tasks) {
+.controller('TaskCtrl', ['tasks', 'taskService', function (tasks, taskService) {
   var self = this;
 
   self.tasks = tasks;
+
+  self.removeTask = function (id) {
+    taskService.removeTask(id);
+  }
 
 }]);

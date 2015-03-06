@@ -15,9 +15,21 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
     controller: 'NewTaskCtrl',
     controllerAs: 'vm',
-    templateUrl: 'static/new-task.html'
+    templateUrl: 'static/new-tasks/new-task.html'
   });
-}]).controller('NewTaskCtrl', [function () {
+}]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
+
+  var self = this;
+  self.task = Task();
+
+  self.addTask = function () {
+    taskService.addTask(self.task).then(self.goToTasks);
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
+  }
+
 
 }]);
 
@@ -27,8 +39,8 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.get(url));
   }
 
-  function put(url, task) {
-    return processAjaxPromise($http.put(url, task));
+  function post(url, task) {
+    return processAjaxPromise($http.post(url, task));
   }
 
   function processAjaxPromise(p) {
@@ -52,7 +64,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     addTask: function (task) {
-      return put('/tasks/', task);
+      return post('/tasks/', task);
     }
   };
 }]);

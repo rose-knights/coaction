@@ -66,7 +66,7 @@ def add_comment(task_id):
 def delete_comment(task_id, comment_id):
     """Method: DELETE
        Delete specified comment from Database."""
-    comment = Comment.query.filter_by(id=comment_id)
+    comment = Comment.query.filter_by(id=comment_id).first()
     db.session.delete(comment)
     db.session.commit()
     return "Comment Successfully Deleted", 200

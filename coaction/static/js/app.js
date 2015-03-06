@@ -72,13 +72,16 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', [function () {
+.controller('TaskCtrl', ['tasks', function (tasks) {
+  var self = this;
+
+  self.tasks = tasks;
 
 }]);
 
 app.factory('Task', function () {
   return function (spec) {
-    spec || {};
+    spec = spec || {};
     return {
       title: spec.title,
       description: spec.description,

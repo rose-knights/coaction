@@ -7,6 +7,7 @@ from flask.ext.script.commands import ShowUrls, Clean
 
 from coaction import create_app, db
 from coaction.generate_seed_data import create_specified_user, create_task
+from coaction.generate_seed_data import create_multiple_users
 
 
 app = create_app()
@@ -40,6 +41,8 @@ def seed():
                                  'Test', 'testusername')
     for count in range(tasks):
         create_task(user.id)
+
+    create_multiple_users(25)
 
     print('Tasks: {} Username: {}'.format(tasks, user.username))
 

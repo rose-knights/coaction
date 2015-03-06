@@ -1,6 +1,9 @@
 from flask import Blueprint, flash, jsonify, request
 from datetime import datetime
+from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_required, current_user
 
+from .forms import LoginForm
 from .models import Task, Comment
 from .extensions import db, hasher
 
@@ -10,6 +13,21 @@ coaction = Blueprint("coaction", __name__, static_folder="./static")
 @coaction.route("/")
 def index():
     return coaction.send_static_file("index.html")
+
+
+@coaction.route("/login/<user_id>", methods=['POST'])
+def login_user(user_id):
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get_or_404(user_id)
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return True
+        else:
+            return "Incorrect username or password", 401
+    print('raw: ', form.errors)
+    print('jsonified: ', jsonify(form.errors))
+    return jsonify(form.errors)
 
 
 @coaction.route("/tasks/")
@@ -45,19 +63,44 @@ def view_task(task_id):
        Returns all data for a single task from the database."""
     data = request.get_json()
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
-    return jsonify(task.to_dict()), 200
+    return_task = task.to_dict()
+    return_task["comments"] = task.comments
+    return jsonify(return_task), 200
 
 
 @coaction.route("/tasks/<task_id>/comments", methods=["POST"])
 def add_comment(task_id):
-    """Method: PUT
+    """Method: POST
        Add comments to a particular task"""
-    data= request.get_json()
+    data = request.get_json()
     comment = Comment(owner_id=1,
-                      task_id=task_id,
+                      task_id=hasher.decode(task_id)[0],
                       date=datetime.now(),
                       text=data["text"])
+    db.session.add(comment)
+    db.session.commit()
     return jsonify(comment.to_dict()), 201
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["PUT"])
+def edit_comment(task_id, comment_id):
+    """Method: PUT
+       Edits selected comment"""
+    data = request.get_json()
+    comment = Comment.query.filter_by(id=comment_id).first()
+    comment.text = data["text"]
+    db.session.commit()
+    return jsonify(comment.to_dict()), 200
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])
+def delete_comment(task_id, comment_id):
+    """Method: DELETE
+       Delete specified comment from Database."""
+    comment = Comment.query.filter_by(id=comment_id).first()
+    db.session.delete(comment)
+    db.session.commit()
+    return "Comment Successfully Deleted", 200
 
 
 @coaction.route("/tasks/<task_id>", methods=["PUT"])

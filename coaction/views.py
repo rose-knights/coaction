@@ -85,16 +85,21 @@ def add_comment(task_id):
     else:
         return jsonify(form.errors), 400
 
+
 @coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["PUT"])
 def edit_comment(task_id, comment_id):
     """Method: PUT
        Edits selected comment"""
     data = request.get_json()
-    comment = Comment.query.filter_by(id=comment_id).first()
-    comment.text = data["text"]
-    db.session.commit()
-    return jsonify(comment.to_dict()), 200
-
+    form = AddComment(data=data, formdata=None, csrf_enabled=False)
+    if form.validate():
+        comment = Comment.query.filter_by(id=comment_id).first()
+        comment.text = data["text"]
+        db.session.commit()
+        return jsonify(comment.to_dict()), 200
+    else:
+        return jsonify(form.errors), 400
+        
 
 @coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])
 def delete_comment(task_id, comment_id):

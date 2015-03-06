@@ -5,7 +5,7 @@ from .extensions import db, migrate, config
 from .views import coaction
 
 
-SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/coaction.db"
+SQLALCHEMY_DATABASE_URI = "postgres://localhost/coaction"
 DEBUG = True
 SECRET_KEY = 'development-key'
 

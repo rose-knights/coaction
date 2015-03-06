@@ -15,9 +15,21 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
     controller: 'NewTaskCtrl',
     controllerAs: 'vm',
-    templateUrl: 'static/new-task.html'
+    templateUrl: 'static/new-tasks/new-task.html'
   });
-}]).controller('NewTaskCtrl', [function () {
+}]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
+
+  var self = this;
+  self.task = Task();
+
+  self.addTask = function () {
+    taskService.addTask(self.task).then(self.goToTasks);
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
+  }
+
 
 }]);
 
@@ -31,9 +43,15 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.post(url, task));
   }
 
+  function remove(url) {
+    return processAjaxPromise($http.delete(url));
+  }
+
   function processAjaxPromise(p) {
     return p.then(function (result) {
-      return result.data;
+      var data = result.data;
+      console.log(data.tasks);
+      return data.tasks;
     })
     .catch(function (error) {
       $log.log(error);
@@ -42,7 +60,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   return {
     getTaskList: function () {
-      return get('/tasks');
+      return get('/tasks/');
     },
 
     getTaskById: function (id) {
@@ -50,33 +68,50 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     addTask: function (task) {
-      return post('/tasks', task);
+      return post('/tasks/', task);
+    },
+
+    removeTask: function (id) {
+      return remove('/tasks/' + id)
     }
-  }
+  };
 }]);
 
 app.config(['$routeProvider', function ($routeProvider) {
   var routeDefinition = {
-    templateUrl: 'static/tasks/tasks.html',
+    templateUrl: 'static/tasks/my-tasks.html',
     controller: 'TaskCtrl',
     controllerAs: 'vm',
-    // resolve: {
-    //   tasks: ['taskService', function (taskService) {
-    //     return taskService.getTaskList();
-    //   }]
-    // }
+    resolve: {
+      tasks: ['taskService', function (taskService) {
+        return taskService.getTaskList();
+      }]
+    }
   };
 
   $routeProvider.when('/', routeDefinition);
-  $routeProvider.when('/tasks', routeDefinition);
+  $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', [function () {
+.controller('TaskCtrl', ['$location', 'tasks', 'taskService', function ($location, tasks, taskService) {
+  var self = this;
+
+  self.tasks = tasks;
+
+  self.removeTask = function (id) {
+    taskService.removeTask(id).then(function () {
+      taskService.getTaskList();
+    });
+  }
+
+  self.addTaskPage = function () {
+    $location.path('/new-task');
+  }
 
 }]);
 
 app.factory('Task', function () {
   return function (spec) {
-    spec || {};
+    spec = spec || {};
     return {
       title: spec.title,
       description: spec.description,
@@ -84,7 +119,7 @@ app.factory('Task', function () {
       createdOn: spec.createdOn,
       dueOn: spec.dueOn
     };
-  }
+  };
 });
 
 app.controller('Error404Ctrl', ['$location', function ($location) {

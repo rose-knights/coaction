@@ -61,3 +61,13 @@ def edit_task(task_id):
         else datetime.strptime(data["date_completed"], "%m/%d/%Y")
     db.session.commit()
     return jsonify(task.to_dict()), 201
+
+
+@coaction.route("/tasks/<task_id>", methods=["DELETE"])
+def delete_task(task_id):
+    """ Method: DELETE
+        Deletes the specified task from the database."""
+    task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
+    db.session.delete(task)
+    db.session.commit()
+    return "{} Successfully Deleted".format(task_id), 200

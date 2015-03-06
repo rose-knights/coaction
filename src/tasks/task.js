@@ -1,6 +1,6 @@
 app.factory('Task', function () {
   return function (spec) {
-    spec || {};
+    spec = spec || {};
     return {
       title: spec.title,
       description: spec.description,
@@ -8,5 +8,5 @@ app.factory('Task', function () {
       createdOn: spec.createdOn,
       dueOn: spec.dueOn
     };
-  }
+  };
 });

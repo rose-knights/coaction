@@ -23,9 +23,6 @@ pytest>=2.6.3
 pytest-flask>=0.7.3
 webtest
 
-# Management script
-Flask-Script
-
 # Seed Data
 fake-factory
 

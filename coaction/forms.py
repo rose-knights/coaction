@@ -1,4 +1,8 @@
 from flask_wtf import Form
+from wtforms import StringField, PasswordField, DateField, validators
+from wtforms.validators import DataRequired, Email, EqualTo, Length, AnyOf
+from wtforms.fields.html5 import EmailField
+
 
 
 class LoginForm(Form):
@@ -15,7 +19,7 @@ class RegistrationForm(Form):
                              validators=[DataRequired(),
                                          EqualTo('password_verification',
                                          message="Passwords must match"),
-                                         validators.Length(min=5)])
+                                         Length(min=5)])
     password_verification = PasswordField('Repeat password')
 
 

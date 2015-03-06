@@ -1,6 +1,9 @@
 from flask import Blueprint, flash, jsonify, request
 from datetime import datetime
+from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_required, current_user
 
+from .forms import LoginForm
 from .models import Task, Comment
 from .extensions import db, hasher
 
@@ -10,6 +13,21 @@ coaction = Blueprint("coaction", __name__, static_folder="./static")
 @coaction.route("/")
 def index():
     return coaction.send_static_file("index.html")
+
+
+@coaction.route("/login/<user_id>", methods=['POST'])
+def login_user(user_id):
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get_or_404(user_id)
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return True
+        else:
+            return "Incorrect username or password", 401
+    print('raw: ', form.errors)
+    print('jsonified: ', jsonify(form.errors))
+    return jsonify(form.errors)
 
 
 @coaction.route("/tasks/")

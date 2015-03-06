@@ -37,7 +37,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     removeTask: function (id) {
-      return remove('/tasks/', id)
+      return remove('/tasks/' + id)
     }
   };
 }]);

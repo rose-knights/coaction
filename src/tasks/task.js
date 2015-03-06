@@ -8,5 +8,5 @@ app.factory('Task', function () {
       createdOn: spec.createdOn,
       dueOn: spec.dueOn
     };
-  }
+  };
 });

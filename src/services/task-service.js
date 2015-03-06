@@ -10,7 +10,9 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   function processAjaxPromise(p) {
     return p.then(function (result) {
-      return result.data;
+      var data = result.data;
+      console.log(data.tasks);
+      return data.tasks;
     })
     .catch(function (error) {
       $log.log(error);
@@ -27,7 +29,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     addTask: function (task) {
-      return put('/tasks', task);
+      return put('/tasks/', task);
     }
-  }
+  };
 }]);

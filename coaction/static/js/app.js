@@ -33,7 +33,9 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   function processAjaxPromise(p) {
     return p.then(function (result) {
-      return result.data;
+      var data = result.data;
+      console.log(data.tasks);
+      return data.tasks;
     })
     .catch(function (error) {
       $log.log(error);
@@ -50,9 +52,9 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     addTask: function (task) {
-      return put('/tasks', task);
+      return put('/tasks/', task);
     }
-  }
+  };
 }]);
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -68,9 +70,9 @@ app.config(['$routeProvider', function ($routeProvider) {
   };
 
   $routeProvider.when('/', routeDefinition);
-  $routeProvider.when('/my-tasks/', routeDefinition);
+  $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', ['taskService', function (taskService) {
+.controller('TaskCtrl', [function () {
 
 }]);
 
@@ -84,7 +86,7 @@ app.factory('Task', function () {
       createdOn: spec.createdOn,
       dueOn: spec.dueOn
     };
-  }
+  };
 });
 
 app.controller('Error404Ctrl', ['$location', function ($location) {

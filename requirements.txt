@@ -32,3 +32,6 @@ flask-login
 
 # Heroku
 psycopg2==2.6
+
+# Hash Ids
+hashids

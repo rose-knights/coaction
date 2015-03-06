@@ -1,12 +1,15 @@
-<h1>Hello</h1>
+<h1>My Tasks</h1>
 
 <button ng-click="vm.addTaskPage()">Add New Task</button>
 
 <ul>
   <li class="task-item" ng-repeat="task in vm.tasks">
+    <button ng-click="vm.changeStatus(task.id, to_do)">To Do</button>
+    <button ng-click="vm.changeStatus(task.id, doing)">Doing</button>
+    <button ng-click="vm.changeStatus(task.id, done)">Done</button>
     <span class="task-name">{{task.name}}</span>
-    <span class="task-description">{{task.description}}</span>
-    <span class="task-due-date">{{task.date_due}}</span>
+    <!-- <span class="task-description">{{task.description}}</span> -->
+    <span class="task-date-due">{{task.date_due}}</span>
     <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
   </li>
 </ul>

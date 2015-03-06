@@ -19,13 +19,15 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.tasks = tasks;
 
   self.removeTask = function (id) {
-    taskService.removeTask(id).then(function () {
-      taskService.getTaskList();
-    });
+    taskService.removeTask(id);
   }
 
   self.addTaskPage = function () {
     $location.path('/new-task');
+  }
+
+  self.changeStatus = function (id, status) {
+    taskService.changeStatus(id, status);
   }
 
 }]);

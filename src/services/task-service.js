@@ -8,6 +8,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.post(url, task));
   }
 
+  function put(url, task, status) {
+    return processAjaxPromise($http.put(url, task, status));
+  }
+
   function remove(url) {
     return processAjaxPromise($http.delete(url));
   }
@@ -38,6 +42,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
     removeTask: function (id) {
       return remove('/tasks/' + id)
+    },
+
+    changeStatus: function (id, status) {
+      return put('/tasks/' + id, status)
     }
   };
 }]);

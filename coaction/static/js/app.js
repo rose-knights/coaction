@@ -11,6 +11,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
     controller: 'NewTaskCtrl',
@@ -43,6 +44,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.post(url, task));
   }
 
+  function put(url, task, status) {
+    return processAjaxPromise($http.put(url, task, status));
+  }
+
   function remove(url) {
     return processAjaxPromise($http.delete(url));
   }
@@ -73,6 +78,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
     removeTask: function (id) {
       return remove('/tasks/' + id)
+    },
+
+    changeStatus: function (id, status) {
+      return put('/tasks/' + id, status)
     }
   };
 }]);
@@ -98,13 +107,15 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.tasks = tasks;
 
   self.removeTask = function (id) {
-    taskService.removeTask(id).then(function () {
-      taskService.getTaskList();
-    });
+    taskService.removeTask(id);
   }
 
   self.addTaskPage = function () {
     $location.path('/new-task');
+  }
+
+  self.changeStatus = function (id, status) {
+    taskService.changeStatus(id, status);
   }
 
 }]);
@@ -121,6 +132,8 @@ app.factory('Task', function () {
     };
   };
 });
+
+
 
 app.controller('Error404Ctrl', ['$location', function ($location) {
   this.message = 'Could not find: ' + $location.url();

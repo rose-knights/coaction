@@ -43,18 +43,21 @@ def add_task():
     """Method: POST
        Adds new task to the database"""
     data = request.get_json()
-    new_task = Task(owner_id=1,
-                    name=data["name"],
-                    status="to_do",
-                    date_added=datetime.today().date()
-                    )
-    new_task.description = None if "description" not in data.keys() \
-        else data["description"]
-    new_task.date_due = None if "date_due" not in data.keys() \
-        else datetime.strptime(data["date_due"], "%m/%d/%Y")
-    db.session.add(new_task)
-    db.session.commit()
-    return jsonify(new_task.to_dict()), 201
+    form = AddTask(data=data, formdata=None, csrf_enabled=False)
+    if form.validate():
+        new_task = Task(owner_id=1,
+                        name=data["name"],
+                        status="to_do",
+                        date_added=datetime.today().date(),
+                        description=data["description"]
+                        )
+        new_task.date_due = None if not data["date_due"] \
+            else datetime.strptime(data["date_due"], "%m/%d/%Y")
+        db.session.add(new_task)
+        db.session.commit()
+        return jsonify(new_task.to_dict()), 201
+    else:
+        return jsonify(form.errors), 400
 
 
 @coaction.route("/tasks/<task_id>")
@@ -99,7 +102,7 @@ def edit_comment(task_id, comment_id):
         return jsonify(comment.to_dict()), 200
     else:
         return jsonify(form.errors), 400
-        
+
 
 @coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])
 def delete_comment(task_id, comment_id):

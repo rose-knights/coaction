@@ -42,8 +42,8 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     return processAjaxPromise($http.post(url, task));
   }
 
-  function put(url) {
-    return processAjaxPromise($http.put(url));
+  function put(url, data) {
+    return processAjaxPromise($http.put(url, data));
   }
 
   function remove(url) {
@@ -76,11 +76,11 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     },
 
     removeTask: function (id) {
-      return remove('/tasks/' + id)
+      return remove('/tasks/' + id);
     },
 
-    changeStatus: function (id) {
-      return put('/tasks/' + id)
+    changeStatus: function (id, data) {
+      return put('/tasks/' + id, data);
     }
   };
 }]);
@@ -122,8 +122,8 @@ app.config(['$routeProvider', function ($routeProvider) {
     $location.path('/new-task');
   }
 
-  self.changeStatus = function (id, status) {
-    taskService.changeStatus(id, status);
+  self.changeStatus = function (id) {
+    taskService.changeStatus(id, id.status);
   }
 
 }]);

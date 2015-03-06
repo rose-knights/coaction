@@ -28,9 +28,12 @@ def add_task():
     new_task = Task(owner_id=1,
                     name=data["name"],
                     status="to_do",
-                    description=None,
                     date_added=datetime.today().date()
                     )
+    new_task.description = None if "description" not in data.keys() \
+        else data["description"]
+    new_task.date_due = None if "date_due" not in data.keys() \
+        else datetime.strptime(data["date_due"], "%m/%d/%Y")
     db.session.add(new_task)
     db.session.commit()
     return jsonify(new_task.to_dict()), 201

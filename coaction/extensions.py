@@ -16,3 +16,6 @@ bcrypt = Bcrypt()
 
 from flask.ext.login import LoginManager
 login_manager = LoginManager()
+
+from hashids import Hashids
+hasher = Hashids("salted bacon", min_length=5)

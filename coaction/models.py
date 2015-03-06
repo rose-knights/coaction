@@ -1,4 +1,4 @@
-from .extensions import db, bcrypt, login_manager
+from .extensions import db, bcrypt, login_manager, hasher
 from flask.ext.login import UserMixin
 from datetime import datetime
 
@@ -52,7 +52,7 @@ class Task(db.Model):
         return "<name {}>".format(self.name)
 
     def to_dict(self):
-        data= {"id": self.id,
+        data= {"id": hasher.encode(self.id),
                 "owner_id": self.owner_id,
                 "name": self.name,
                 "status": self.status,

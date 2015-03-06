@@ -1,3 +1,9 @@
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   border: 0;
@@ -26,29 +32,128 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-@font-face {
-  font-family: "fontastic";
-  src: url("static/fonts/fontastic.eot");
-  src: url("static/fonts/fontastic.eot?#iefix") format("embedded-opentype"), url("static/fonts/fontastic.woff") format("woff"), url("static/fonts/fontastic.ttf") format("truetype"), url("static/fonts/fontastic.svg#fontastic") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
+@font-face {
+  font-family: "fontastic";
+  src: url("css/fonts/fontastic.eot");
+  src: url("css/fonts/fontastic.eot?#iefix") format("embedded-opentype"), url("cssfonts/fontastic.woff") format("woff"), url("/fonts/fontastic.ttf") format("truetype"), url("/fonts/fontastic.svg#fontastic") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+[data-icon]:before {
+  font-family: "fontastic" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontastic" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-down-open-big:before {
+  content: "a"; }
+
+.icon-left-open-big:before {
+  content: "b"; }
+
+.icon-plus:before {
+  content: "c"; }
+
+.icon-key:before {
+  content: "d"; }
+
+.icon-pencil:before {
+  content: "e"; }
+
+.icon-feather:before {
+  content: "f"; }
+
+.icon-eye:before {
+  content: "g"; }
+
+.icon-edit-write:before {
+  content: "h"; }
+
+.icon-check-mark-2:before {
+  content: "i"; }
+
+.icon-check-mark:before {
+  content: "j"; }
+
+.icon-square-line:before {
+  content: "k"; }
+
+.icon-hourglass:before {
+  content: "l"; }
+
+.icon-calendar:before {
+  content: "m"; }
+
+.icon-pin:before {
+  content: "n"; }
+
+.icon-clipboard:before {
+  content: "o"; }
+
+.icon-cancel:before {
+  content: "p"; }
+
+.icon-page-search:before {
+  content: "q"; }
+
+.icon-list-number:before {
+  content: "r"; }
+
+.icon-id-card:before {
+  content: "s"; }
+
+.icon-user:before {
+  content: "t"; }
+
+.icon-user-outline:before {
+  content: "u"; }
+
+.icon-users:before {
+  content: "v"; }
+
+.icon-users-outline:before {
+  content: "w"; }
+
+.icon-magnifying-glass:before {
+  content: "x"; }
+
+/*------------------------------------*\
+    #FONTS
+\*------------------------------------*/
 body {
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
   line-height: 1.4em;
   background: white;
   color: #444; }
 
 h1 {
-  font-size: 2em;
-  margin: .67em 0; }
+  font-size: 36pt;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold; }
 
 h2 {
-  font-size: 1.5em;
-  margin: .75em 0; }
+  font-size: 24pt;
+  margin: .3em 0; }
 
 h3 {
   font-size: 1.17em;
@@ -64,7 +169,7 @@ h6 {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: bolder;
-  line-height: 1.3em; }
+  line-height: 1em; }
 
 p {
   line-height: 1.4em;
@@ -94,8 +199,74 @@ button {
   color: white;
   font-size: 1em; }
 
+/*------------------------------------*\
+    #HEADER
+\*------------------------------------*/
+.app-header {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  margin: .5em 0 0; }
+
 .root-content {
-  padding: 2em; }
+  padding: 2.35765%; }
+
+/*------------------------------------*\
+    #NEW-TASK
+\*------------------------------------*/
+.contain {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  .contain::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.new-task-form {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 48.82117%;
+  margin-left: 25.58941%;
+  background: blue; }
+  .new-task-form:last-child {
+    margin-right: 0; }
+
+.new-task-head {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 48.82117%;
+  margin-left: 25.58941%; }
+  .new-task-head:last-child {
+    margin-right: 0; }
+
+.icons {
+  font-family: 'fontastic'; }
+
+.textarea {
+  font-size: 16px;
+  border-color: #cccccc;
+  border-style: solid;
+  border-width: 0px;
+  box-shadow: 3px 3px 1px 0px rgba(173, 173, 173, 0.75);
+  margin: .5em;
+  padding: 0.5em 5.3em 0.5em .5em; }
+
+.textarea:focus {
+  outline: none; }
+
+.add {
+  background-color: blue;
+  font-size: 30pt;
+  padding: 0 0.5em 0.5em;
+  float: right; }
+
+/*------------------------------------*\
+    #TASK
+\*------------------------------------*/
+.task-item {
+  padding: 2.35765%; }
 
 .toolbar {
   background: #F4F4F4;

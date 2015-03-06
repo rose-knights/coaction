@@ -20,12 +20,23 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   self.removeTask = function (id) {
     taskService.removeTask(id).then(function () {
-      taskService.getTaskList();
-    });
+      for (var i = 0; i < self.tasks.length; ++i) {
+        if (self.tasks[i].id === id) {
+          self.tasks.splice(i, 1);
+          break;
+        }
+      }
+    }).catch(function () {
+      alert('failed to delete');
+    })
   }
 
   self.addTaskPage = function () {
     $location.path('/new-task');
+  }
+
+  self.changeStatus = function (id, status) {
+    taskService.changeStatus(id, status);
   }
 
 }]);

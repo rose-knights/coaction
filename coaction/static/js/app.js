@@ -11,6 +11,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
     controller: 'NewTaskCtrl',
@@ -30,7 +31,6 @@ app.config(['$routeProvider', function($routeProvider) {
     $location.path('/my-tasks');
   }
 
-
 }]);
 
 app.factory('taskService', ['$http', '$log', function($http, $log) {
@@ -41,6 +41,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   function post(url, task) {
     return processAjaxPromise($http.post(url, task));
+  }
+
+  function put(url) {
+    return processAjaxPromise($http.put(url));
   }
 
   function remove(url) {
@@ -55,6 +59,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
     })
     .catch(function (error) {
       $log.log(error);
+      throw error;
     });
   }
 
@@ -73,6 +78,10 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
 
     removeTask: function (id) {
       return remove('/tasks/' + id)
+    },
+
+    changeStatus: function (id) {
+      return put('/tasks/' + id)
     }
   };
 }]);
@@ -99,12 +108,23 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   self.removeTask = function (id) {
     taskService.removeTask(id).then(function () {
-      taskService.getTaskList();
-    });
+      for (var i = 0; i < self.tasks.length; ++i) {
+        if (self.tasks[i].id === id) {
+          self.tasks.splice(i, 1);
+          break;
+        }
+      }
+    }).catch(function () {
+      alert('failed to delete');
+    })
   }
 
   self.addTaskPage = function () {
     $location.path('/new-task');
+  }
+
+  self.changeStatus = function (id, status) {
+    taskService.changeStatus(id, status);
   }
 
 }]);
@@ -121,6 +141,8 @@ app.factory('Task', function () {
     };
   };
 });
+
+
 
 app.controller('Error404Ctrl', ['$location', function ($location) {
   this.message = 'Could not find: ' + $location.url();

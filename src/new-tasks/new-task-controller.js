@@ -17,5 +17,4 @@ app.config(['$routeProvider', function($routeProvider) {
     $location.path('/my-tasks');
   }
 
-
 }]);

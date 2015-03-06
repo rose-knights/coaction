@@ -37,9 +37,9 @@ def create_task(user_id=1):
 def create_multiple_users(num=20):
     fake = Factory.create()
     profile = fake.simple_profile()
-    for count in num:
+    for count in range(num):
         profile = fake.simple_profile()
-        create_specified_user(email=profile['mail']
-                              password=fake.password()
-                              name=profile['name']
+        create_specified_user(email=profile['mail'],
+                              password=fake.password(),
+                              name=profile['name'],
                               username=profile['username'])

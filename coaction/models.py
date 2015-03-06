@@ -54,7 +54,7 @@ class Task(db.Model):
     @property
     def comments(self):
         data = [comment.to_dict() for comment in self.get_comments]
-        return jsonify(results=data)
+        return data
 
     def to_dict(self, detail=False):
         data= {"id": hasher.encode(self.id),

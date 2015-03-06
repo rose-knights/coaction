@@ -45,7 +45,9 @@ def view_task(task_id):
        Returns all data for a single task from the database."""
     data = request.get_json()
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
-    return jsonify(task.to_dict()), 200
+    return_task = task.to_dict()
+    return_task["comments"] = task.comments
+    return jsonify(return_task), 200
 
 
 @coaction.route("/tasks/<task_id>/comments", methods=["POST"])

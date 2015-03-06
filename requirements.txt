@@ -35,3 +35,6 @@ psycopg2==2.6
 
 # Hash Ids
 hashids
+
+#WTForms
+Flask-WTF==0.11

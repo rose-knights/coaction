@@ -51,7 +51,12 @@ class Task(db.Model):
     def __repr__(self):
         return "<name {}>".format(self.name)
 
-    def to_dict(self):
+    @property
+    def comments(self):
+        data = [comment.to_dict() for comment in self.get_comments]
+        return jsonify(results=data)
+
+    def to_dict(self, detail=False):
         data= {"id": hasher.encode(self.id),
                 "owner_id": self.owner_id,
                 "name": self.name,
@@ -68,5 +73,24 @@ class Task(db.Model):
             data["date_due"] = datetime.strftime(self.date_due, "%m/%d/%Y")
         else:
             data["date_due"] = None
-
         return data
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    task_id = db.Column(db.Integer, db.ForeignKey('task.id'))
+    date = db.Column(db.DateTime, nullable=False)
+    text = db.Column(db.String(500))
+    task_comments = db.relationship('Task',
+        backref=db.backref('get_comments', lazy='dynamic'))
+
+    def __repr__(self):
+        return "<comment {}>".format(self.id)
+
+    def to_dict(self):
+        return {"id": self.id,
+                "owner_id": self.owner_id,
+                "task_id": self.task_id,
+                "date": datetime.strftime(self.date, "%m/%d/%y %H:%M"),
+                "text": self.text}

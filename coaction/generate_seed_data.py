@@ -33,3 +33,13 @@ def create_task(user_id=1):
     db.session.add(task)
     db.session.commit()
     return True
+
+def create_multiple_users(num=20):
+    fake = Factory.create()
+    profile = fake.simple_profile()
+    for count in range(num):
+        profile = fake.simple_profile()
+        create_specified_user(email=profile['mail'],
+                              password=fake.password(),
+                              name=profile['name'],
+                              username=profile['username'])

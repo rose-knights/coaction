@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, jsonify, request
 from datetime import datetime
 
-from .models import Task
+from .models import Task, Comment
 from .extensions import db, hasher
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
@@ -48,6 +48,18 @@ def view_task(task_id):
     return jsonify(task.to_dict()), 200
 
 
+@coaction.route("/tasks/<task_id>/comments", methods=["POST"])
+def add_comment(task_id):
+    """Method: PUT
+       Add comments to a particular task"""
+    data= request.get_json()
+    comment = Comment(owner_id=1,
+                      task_id=task_id,
+                      date=datetime.now(),
+                      text=data["text"])
+    return jsonify(comment.to_dict()), 201
+
+
 @coaction.route("/tasks/<task_id>", methods=["PUT"])
 def edit_task(task_id):
     """Method: PUT
@@ -68,8 +80,8 @@ def edit_task(task_id):
 
 @coaction.route("/tasks/<task_id>", methods=["DELETE"])
 def delete_task(task_id):
-    """ Method: DELETE
-        Deletes the specified task from the database."""
+    """Method: DELETE
+       Deletes the specified task from the database."""
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
     db.session.delete(task)
     db.session.commit()

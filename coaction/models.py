@@ -91,6 +91,6 @@ class Comment(db.Model):
     def to_dict(self):
         return {"id": self.id,
                 "owner_id": self.owner_id,
-                "task_id": self.task_id,
+                "task_id": hasher.encode(self.task_id),
                 "date": datetime.strftime(self.date, "%m/%d/%y %H:%M"),
                 "text": self.text}

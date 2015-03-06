@@ -54,10 +54,22 @@ def add_comment(task_id):
        Add comments to a particular task"""
     data= request.get_json()
     comment = Comment(owner_id=1,
-                      task_id=task_id,
+                      task_id=hasher.decode(task_id)[0],
                       date=datetime.now(),
                       text=data["text"])
+    db.session.add(comment)
+    db.session.commit()
     return jsonify(comment.to_dict()), 201
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])
+def delete_comment(task_id, comment_id):
+    """Method: DELETE
+       Delete specified comment from Database."""
+    comment = Comment.query.filter_by(id=comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return "Comment Successfully Deleted", 200
 
 
 @coaction.route("/tasks/<task_id>", methods=["PUT"])

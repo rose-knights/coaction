@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 import os
+import random
 
 from flask.ext.script import Manager, Shell, Server
 from flask.ext.migrate import MigrateCommand
 from flask.ext.script.commands import ShowUrls, Clean
 
 from coaction import create_app, db
-from coaction.generate_seed_data import create_specified_user, create_task
-from coaction.generate_seed_data import create_multiple_users
-
+from coaction.generate_seed_data import create_specified_user, create_task, \
+                                 create_multiple_users, create_task_comment, \
+                                 task_comment_creation
+from coaction.models import User
 
 app = create_app()
 manager = Manager(app)
@@ -34,18 +36,25 @@ def createdb():
 
 
 @manager.command
-def seed():
+def seed(tasks=27, users=10):
     """Seed database."""
-    tasks = 27
-    user = create_specified_user('test@test.com', 'test',
-                                 'Test', 'testusername')
-    for count in range(tasks):
-        create_task(user.id)
 
-    create_multiple_users(25)
+    test_user = create_specified_user('test@test.com', 'test',
+                                      'Test', 'testusername')
+    create_multiple_users(users)
+    user_list = User.query.all()
+    comment_count = 0
+    for user in user_list:
+        for task in range(random.randint(1, 10)):
+            counter = task_comment_creation(user)
+            comment_count += counter
+    db.session.commit()
 
-    print('Tasks: {} Username: {}'.format(tasks, user.username))
-
+    print('Tasks: {} Users: {} Comments: {}\n'
+          'Test Username: {}\nTest Password: {}'.format(tasks, users,
+                                                        comment_count,
+                                                        test_user.username,
+                                                        test_user.password))
 
 if __name__ == '__main__':
     manager.run()

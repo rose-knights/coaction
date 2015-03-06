@@ -3,8 +3,8 @@ from datetime import datetime
 from flask.ext.login import login_user, logout_user
 from flask.ext.login import login_required, current_user
 
-from .forms import LoginForm
-from .models import Task, Comment
+from .forms import LoginForm, RegistrationForm
+from .models import Task, Comment, User
 from .extensions import db, hasher
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
@@ -15,20 +15,46 @@ def index():
     return coaction.send_static_file("index.html")
 
 
-@coaction.route("/login/<user_id>", methods=['POST'])
-def login_user(user_id):
-    form = LoginForm()
+@coaction.route("/login/", methods=['GET', 'POST'])
+def login_a_user():
+    data = request.get_json()
+    form = LoginForm(data=data, formdata=None, csrf_enabled=False)
     if form.validate_on_submit():
-        user = User.query.get_or_404(user_id)
+        user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            return True
+            return "Successfully logged in", 200
         else:
             return "Incorrect username or password", 401
-    print('raw: ', form.errors)
-    print('jsonified: ', jsonify(form.errors))
-    return jsonify(form.errors)
+    return jsonify(form.errors), 400
 
+@coaction.route("/register/", methods=["GET", "POST"])
+def register():
+    data = request.get_json()
+    form = RegistrationForm(data=data, formdata=None, csrf_enabled=False)
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            return "A user with that email or username address "\
+                   "already exists.", 401
+        else:
+            user = User(username=form.username.data,
+                        name=form.name.data,
+                        email=form.email.data,
+                        password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return "Successfully registered and logged in", 200
+    else:
+        return jsonify(form.errors), 400
+
+
+@coaction.route("/logout/", methods=['POST'])
+def logout():
+    logout_user()
+    return "Successfully logged out.", 200
 
 @coaction.route("/tasks/")
 def list_all_tasks():

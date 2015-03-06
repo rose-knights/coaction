@@ -32,7 +32,7 @@ def add_task():
                     )
     db.session.add(new_task)
     db.session.commit()
-    return jsonify(new_task), 201
+    return jsonify(new_task.to_dict()), 201
 
 
 @coaction.route("/tasks/<task_id>")

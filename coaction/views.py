@@ -50,9 +50,9 @@ def view_task(task_id):
 
 @coaction.route("/tasks/<task_id>/comments", methods=["POST"])
 def add_comment(task_id):
-    """Method: PUT
+    """Method: POST
        Add comments to a particular task"""
-    data= request.get_json()
+    data = request.get_json()
     comment = Comment(owner_id=1,
                       task_id=hasher.decode(task_id)[0],
                       date=datetime.now(),
@@ -60,6 +60,17 @@ def add_comment(task_id):
     db.session.add(comment)
     db.session.commit()
     return jsonify(comment.to_dict()), 201
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["PUT"])
+def edit_comment(task_id, comment_id):
+    """Method: PUT
+       Edits selected comment"""
+    data = request.get_json()
+    comment = Comment.query.filter_by(id=comment_id).first()
+    comment.text = data["text"]
+    db.session.commit()
+    return jsonify(comment.to_dict()), 200
 
 
 @coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])

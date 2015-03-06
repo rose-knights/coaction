@@ -46,7 +46,7 @@ def register():
             db.session.add(user)
             db.session.commit()
             login_user(user)
-            return "Successfully registered and logged in", 200
+            return jsonify(user.to_dict()), 200
     else:
         return jsonify(form.errors), 400
 

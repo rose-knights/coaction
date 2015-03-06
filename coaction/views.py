@@ -1,7 +1,10 @@
 from flask import Blueprint, flash, jsonify, request
 from datetime import datetime
+from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_required, current_user
 
-from .models import Task, Comment
+from .forms import LoginForm, RegistrationForm
+from .models import Task, Comment, User
 from .extensions import db, hasher
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
@@ -11,6 +14,47 @@ coaction = Blueprint("coaction", __name__, static_folder="./static")
 def index():
     return coaction.send_static_file("index.html")
 
+
+@coaction.route("/login/", methods=['GET', 'POST'])
+def login_a_user():
+    data = request.get_json()
+    form = LoginForm(data=data, formdata=None, csrf_enabled=False)
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return "Successfully logged in", 200
+        else:
+            return "Incorrect username or password", 401
+    return jsonify(form.errors), 400
+
+@coaction.route("/register/", methods=["GET", "POST"])
+def register():
+    data = request.get_json()
+    form = RegistrationForm(data=data, formdata=None, csrf_enabled=False)
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            return "A user with that email or username address "\
+                   "already exists.", 401
+        else:
+            user = User(username=form.username.data,
+                        name=form.name.data,
+                        email=form.email.data,
+                        password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return jsonify(user.to_dict()), 200
+    else:
+        return jsonify(form.errors), 400
+
+
+@coaction.route("/logout/", methods=['POST'])
+def logout():
+    logout_user()
+    return "Successfully logged out.", 200
 
 @coaction.route("/tasks/")
 def list_all_tasks():
@@ -45,19 +89,44 @@ def view_task(task_id):
        Returns all data for a single task from the database."""
     data = request.get_json()
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
-    return jsonify(task.to_dict()), 200
+    return_task = task.to_dict()
+    return_task["comments"] = task.comments
+    return jsonify(return_task), 200
 
 
 @coaction.route("/tasks/<task_id>/comments", methods=["POST"])
 def add_comment(task_id):
-    """Method: PUT
+    """Method: POST
        Add comments to a particular task"""
-    data= request.get_json()
+    data = request.get_json()
     comment = Comment(owner_id=1,
-                      task_id=task_id,
+                      task_id=hasher.decode(task_id)[0],
                       date=datetime.now(),
                       text=data["text"])
+    db.session.add(comment)
+    db.session.commit()
     return jsonify(comment.to_dict()), 201
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["PUT"])
+def edit_comment(task_id, comment_id):
+    """Method: PUT
+       Edits selected comment"""
+    data = request.get_json()
+    comment = Comment.query.filter_by(id=comment_id).first()
+    comment.text = data["text"]
+    db.session.commit()
+    return jsonify(comment.to_dict()), 200
+
+
+@coaction.route("/tasks/<task_id>/comments/<comment_id>", methods=["DELETE"])
+def delete_comment(task_id, comment_id):
+    """Method: DELETE
+       Delete specified comment from Database."""
+    comment = Comment.query.filter_by(id=comment_id).first()
+    db.session.delete(comment)
+    db.session.commit()
+    return "Comment Successfully Deleted", 200
 
 
 @coaction.route("/tasks/<task_id>", methods=["PUT"])

@@ -35,8 +35,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     $location.path('/new-task');
   }
 
-  self.changeStatus = function (id, status) {
-    taskService.changeStatus(id, status);
+  self.changeStatus = function (task, status) {
+    task.status = status;
+    taskService.updateTask(task.id, task);
   }
 
 }]);

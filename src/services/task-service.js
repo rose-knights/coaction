@@ -45,7 +45,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
       return remove('/tasks/' + id);
     },
 
-    changeStatus: function (id, data) {
+    updateTask: function (id, data) {
       return put('/tasks/' + id, data);
     }
   };

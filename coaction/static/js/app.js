@@ -79,7 +79,7 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
       return remove('/tasks/' + id);
     },
 
-    changeStatus: function (id, data) {
+    updateTask: function (id, data) {
       return put('/tasks/' + id, data);
     }
   };
@@ -122,8 +122,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     $location.path('/new-task');
   }
 
-  self.changeStatus = function (id) {
-    taskService.changeStatus(id, id.status);
+  self.changeStatus = function (task, status) {
+    task.status = status;
+    taskService.updateTask(task.id, task);
   }
 
 }]);

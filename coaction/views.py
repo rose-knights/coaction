@@ -29,6 +29,35 @@ def login():
     return jsonify(form.errors)
 
 
+@coaction.route("/register/", methods=["GET", "POST"])
+def register():
+    data = request.get_json()
+    form = RegistrationForm(data=data, formdata=None, csrf_enabled=False)
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            return "A user with that email or username address "\
+                   "already exists.", 401
+        else:
+            user = User(username=form.username.data,
+                        name=form.name.data,
+                        email=form.email.data,
+                        password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return jsonify(user.to_dict()), 200
+    else:
+        return jsonify(form.errors), 400
+
+
+@coaction.route("/logout/", methods=['POST'])
+def logout():
+    logout_user()
+    return "Successfully logged out.", 200
+
+
 @coaction.route("/tasks/")
 def list_all_tasks():
     tasks = Task.query.all()
@@ -118,8 +147,6 @@ def edit_task(task_id):
     """Method: PUT
        Updates the fields of a single task and stores changes in the
        database"""
-    import pdb
-    pdb.set_trace()
     data = request.get_json()
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
     task.name = data["name"]

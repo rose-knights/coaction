@@ -15,6 +15,7 @@ def create_app():
     app.config.from_object(__name__)
     app.register_blueprint(coaction)
 
+    login_manager.init_app(app)
     config.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)

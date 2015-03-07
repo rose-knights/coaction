@@ -13,9 +13,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
+    templateUrl: 'static/new-tasks/new-task.html',
     controller: 'NewTaskCtrl',
-    controllerAs: 'vm',
-    templateUrl: 'static/new-tasks/new-task.html'
+    controllerAs: 'vm'
   });
 }]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
 
@@ -85,6 +85,59 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
   };
 }]);
 
+app.factory('userService', ['$http', '$log', 'taskService', function ($http, $log, taskService) {
+
+  function get(url) {
+    return processAjaxPromise($http.get(url));
+  }
+
+  function post(url, task) {
+    return processAjaxPromise($http.post(url, task));
+  }
+
+  function put(url, data) {
+    return processAjaxPromise($http.put(url, data));
+  }
+
+  function remove(url) {
+    return processAjaxPromise($http.delete(url));
+  }
+
+  function processAjaxPromise(p) {
+    return p.then(function (result) {
+      var data = result.data;
+      console.log(data.tasks);
+      return data.tasks;
+    })
+    .catch(function (error) {
+      $log.log(error);
+      throw error;
+    });
+  }
+
+  return {
+    getUserList: function () {
+      return get('/users/');
+    },
+
+    getUserById: function (id) {
+      return get('/users/' + id);
+    },
+
+    loginUser: function (user) {
+      return post('/login/', user);
+    },
+
+    removeUser: function (id) {
+      return remove('/users/' + id);
+    },
+
+    updateUser: function (id, data) {
+      return put('/users/' + id, data)
+    }
+  };
+}]);
+
 app.config(['$routeProvider', function ($routeProvider) {
   var routeDefinition = {
     templateUrl: 'static/tasks/my-tasks.html',
@@ -97,7 +150,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     }
   };
 
-  $routeProvider.when('/', routeDefinition);
+  // $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
 .controller('TaskCtrl', ['$location', 'tasks', 'taskService', function ($location, tasks, taskService) {
@@ -142,7 +195,70 @@ app.factory('Task', function () {
   };
 });
 
+app.config(['$routeProvider', function ($routeProvider) {
+  $routeProvider.when('/signup', {
+    templateUrl: 'static/users/signup.html',
+    controller: 'NewUserCtrl',
+    controllerAs: 'vm'
+  });
+}]).controller('NewUserCtrl', ['$location', 'userService', 'User', function ($location, userService, User) {
 
+  var self = this;
+  self.user = User();
+
+  self.addUser = function () {
+    userService.addUser(self.user).then(self.goToTasks);
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
+  }
+}]);
+
+app.config(['$routeProvider', function ($routeProvider) {
+  var routeDefinition = {
+    templateUrl: 'static/users/login.html',
+    controller: 'UserCtrl',
+    controllerAs: 'vm',
+    // resolve: {
+    //   users: ['userService', function (userService) {
+    //     return userService.getUserList();
+    //   }]
+    // }
+  }
+
+  $routeProvider.when('/', routeDefinition);
+  $routeProvider.when('/login', routeDefinition);
+}])
+.controller('UserCtrl', ['$location', 'userService', function($location, userService){
+  var self = this;
+  // self.users = users;
+
+  self.addUserPage = function () {
+    $location.path('/signup');
+  }
+
+  self.login = function (username) {
+    for (var i = 0; i < self.users.length; ++i) {
+      if (self.users[i].username === username) {
+        return userService.loginUser();
+        break;
+      }
+    }
+  }
+}]);
+
+app.factory('User', function () {
+  return function (spec) {
+    spec = spec || {};
+    return {
+      username: spec.username,
+      password: spec.password,
+      name: spec.name,
+      email: spec.email
+    };
+  };
+});
 
 app.controller('Error404Ctrl', ['$location', function ($location) {
   this.message = 'Could not find: ' + $location.url();

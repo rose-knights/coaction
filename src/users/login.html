@@ -1,7 +1,10 @@
-<form class="user-sign-in" ng-submit="loginUser()">
+<h1>Log In</h1>
 
+<form class="user-sign-in" ng-submit="vm.loginUser()">
+  <input type="text" ng-model="vm.username" placeholder="username">
+  <input type="password" ng-model="vm.password" placeholder="password">
+  <button type="submit">Log In</button>
 </form>
 
-<form class="user-sign-up" ng-submit="addUser()">
-
-</form>
+<h1>Sign Up</h1>
+<button ng-click="vm.addUserPage()">Sign Up</button>

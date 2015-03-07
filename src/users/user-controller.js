@@ -23,11 +23,6 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    // for (var i = 0; i < self.users.length; ++i) {
-      // if (self.users[i].username === user) {
-        return userService.loginUser(user);
-        // break;
-      // }
-    // }
+    return userService.loginUser(user);
   }
 }]);

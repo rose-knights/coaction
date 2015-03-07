@@ -10,7 +10,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     }
   };
 
-  $routeProvider.when('/', routeDefinition);
+  // $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
 .controller('TaskCtrl', ['$location', 'tasks', 'taskService', function ($location, tasks, taskService) {

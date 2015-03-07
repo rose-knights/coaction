@@ -1,0 +1,32 @@
+/*------------------------------------*\
+    #TASK
+\*------------------------------------*/
+
+.task-item {
+  @include pad();
+}
+.toolbar {
+  background: #F4F4F4;
+  padding: 1em;
+  margin-bottom: 1.5em;
+}
+
+.main-nav {
+  background: #6067b0;
+  color: #FFF;
+  padding: 0 2em;
+}
+
+.app-icon {
+  color: inherit;
+}
+
+.app-icon:before {
+  content: 'b';
+  font-family: 'fontastic';
+  display: inline-block;
+  font-size: 2.5em;
+  padding-right: 0.5rem;
+  vertical-align: middle;
+  transform: rotate(-10deg);
+}

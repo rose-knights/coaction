@@ -26,14 +26,14 @@ def login():
             return jsonify(user.to_dict()), 200
         else:
             return "Incorrect username or password", 401
-    return jsonify(form.errors)
+    return jsonify(form.errors), 400
 
 
-@coaction.route("/register/", methods=["GET", "POST"])
+@coaction.route("/register/", methods=["POST"])
 def register():
     data = request.get_json()
     form = RegistrationForm(data=data, formdata=None, csrf_enabled=False)
-    if form.validate_on_submit():
+    if form.validate():
         user = User.query.filter_by(email=form.email.data).first()
         user = User.query.filter_by(username=form.username.data).first()
         if user:
@@ -64,6 +64,14 @@ def list_all_tasks():
     tasks = [task.to_dict() for task in tasks]
 
     return jsonify(tasks=tasks), 200
+
+
+@coaction.route("/tasks/incomplete")
+def view_incomplete_tasks():
+    tasks = Task.query.filter_by(date_completed=None).all()
+    tasks = [task.to_dict() for task in tasks]
+
+    return jsonify(tasks=tasks)
 
 
 @coaction.route("/tasks/", methods=["POST"])

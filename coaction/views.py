@@ -26,14 +26,14 @@ def login():
             return jsonify(user.to_dict()), 200
         else:
             return "Incorrect username or password", 401
-    return jsonify(form.errors)
+    return jsonify(form.errors), 400
 
 
-@coaction.route("/register/", methods=["GET", "POST"])
+@coaction.route("/register/", methods=["POST"])
 def register():
     data = request.get_json()
     form = RegistrationForm(data=data, formdata=None, csrf_enabled=False)
-    if form.validate_on_submit():
+    if form.validate():
         user = User.query.filter_by(email=form.email.data).first()
         user = User.query.filter_by(username=form.username.data).first()
         if user:

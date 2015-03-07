@@ -1,6 +1,6 @@
 app.config(['$routeProvider', function ($routeProvider) {
-  $routeProvider.when('/signup', {
-    templateUrl: 'static/users/signup.html',
+  $routeProvider.when('/register', {
+    templateUrl: 'static/users/register.html',
     controller: 'NewUserCtrl',
     controllerAs: 'vm'
   });
@@ -10,7 +10,8 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.user = User();
 
   self.addUser = function () {
-    userService.addUser(self.user).then(self.goToTasks);
+    console.log(self.user);
+    userService.addUser(self.user);
   }
 
   self.goToTasks = function () {

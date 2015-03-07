@@ -1,11 +1,11 @@
-app.factory('userService', ['$http', '$log', 'taskService', function ($http, $log, taskService) {
+app.factory('userService', ['$http', '$log', function ($http, $log) {
 
   function get(url) {
     return processAjaxPromise($http.get(url));
   }
 
-  function post(url, task) {
-    return processAjaxPromise($http.post(url, task));
+  function post(url, data) {
+    return processAjaxPromise($http.post(url, data));
   }
 
   function put(url, data) {
@@ -22,10 +22,10 @@ app.factory('userService', ['$http', '$log', 'taskService', function ($http, $lo
       console.log(data.tasks);
       return data.tasks;
     })
-    .catch(function (error) {
-      $log.log(error);
-      throw error;
-    });
+    // .catch(function (error) {
+    //   $log.log(error);
+    //   throw error;
+    // });
   }
 
   return {
@@ -38,7 +38,16 @@ app.factory('userService', ['$http', '$log', 'taskService', function ($http, $lo
     },
 
     loginUser: function (user) {
+      console.log(user);
       return post('/login/', user);
+    },
+
+    addUser: function (user) {
+      return post('/register/', user)
+    },
+
+    logoutUser: function (user) {
+      return post('/logout/', user)
     },
 
     removeUser: function (id) {

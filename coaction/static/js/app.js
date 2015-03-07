@@ -85,14 +85,14 @@ app.factory('taskService', ['$http', '$log', function($http, $log) {
   };
 }]);
 
-app.factory('userService', ['$http', '$log', 'taskService', function ($http, $log, taskService) {
+app.factory('userService', ['$http', '$log', function ($http, $log) {
 
   function get(url) {
     return processAjaxPromise($http.get(url));
   }
 
-  function post(url, task) {
-    return processAjaxPromise($http.post(url, task));
+  function post(url, data) {
+    return processAjaxPromise($http.post(url, data));
   }
 
   function put(url, data) {
@@ -109,10 +109,10 @@ app.factory('userService', ['$http', '$log', 'taskService', function ($http, $lo
       console.log(data.tasks);
       return data.tasks;
     })
-    .catch(function (error) {
-      $log.log(error);
-      throw error;
-    });
+    // .catch(function (error) {
+    //   $log.log(error);
+    //   throw error;
+    // });
   }
 
   return {
@@ -125,7 +125,16 @@ app.factory('userService', ['$http', '$log', 'taskService', function ($http, $lo
     },
 
     loginUser: function (user) {
+      console.log(user);
       return post('/login/', user);
+    },
+
+    addUser: function (user) {
+      return post('/register/', user)
+    },
+
+    logoutUser: function (user) {
+      return post('/logout/', user)
     },
 
     removeUser: function (id) {
@@ -196,8 +205,8 @@ app.factory('Task', function () {
 });
 
 app.config(['$routeProvider', function ($routeProvider) {
-  $routeProvider.when('/signup', {
-    templateUrl: 'static/users/signup.html',
+  $routeProvider.when('/register', {
+    templateUrl: 'static/users/register.html',
     controller: 'NewUserCtrl',
     controllerAs: 'vm'
   });
@@ -207,7 +216,8 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.user = User();
 
   self.addUser = function () {
-    userService.addUser(self.user).then(self.goToTasks);
+    console.log(self.user);
+    userService.addUser(self.user);
   }
 
   self.goToTasks = function () {
@@ -219,7 +229,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   var routeDefinition = {
     templateUrl: 'static/users/login.html',
     controller: 'UserCtrl',
-    controllerAs: 'vm',
+    controllerAs: 'vm'
     // resolve: {
     //   users: ['userService', function (userService) {
     //     return userService.getUserList();
@@ -230,21 +240,22 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/login', routeDefinition);
 }])
-.controller('UserCtrl', ['$location', 'userService', function($location, userService){
+.controller('UserCtrl', ['$location', 'userService', 'User', function($location, userService, User){
   var self = this;
+  self.user = User();
   // self.users = users;
 
   self.addUserPage = function () {
-    $location.path('/signup');
+    $location.path('/register');
   }
 
-  self.login = function (username) {
-    for (var i = 0; i < self.users.length; ++i) {
-      if (self.users[i].username === username) {
-        return userService.loginUser();
-        break;
-      }
-    }
+  self.loginUser = function (user) {
+    // for (var i = 0; i < self.users.length; ++i) {
+      // if (self.users[i].username === user) {
+        return userService.loginUser(user);
+        // break;
+      // }
+    // }
   }
 }]);
 

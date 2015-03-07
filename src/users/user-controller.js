@@ -23,6 +23,6 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(user);
+    return userService.loginUser(self.user);
   }
 }]);

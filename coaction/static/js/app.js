@@ -126,7 +126,7 @@ app.factory('userService', ['$http', '$log', function ($http, $log) {
 
     loginUser: function (user) {
       console.log(user);
-      return post('/login/', { username: 'testusername', password: 'test' });
+      return post('/login/', user);
     },
 
     addUser: function (user) {
@@ -250,7 +250,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(user);
+    return userService.loginUser(self.user);
   }
 }]);
 

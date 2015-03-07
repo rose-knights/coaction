@@ -25,12 +25,10 @@ class RegistrationForm(Form):
 
 class AddTask(Form):
     name = StringField('Name', validators=[DataRequired()])
-    status = StringField('Status', validators=[AnyOf(values=['to_do', 'doing',
-                                                             'done'])])
     description = StringField('Description',
                               validators=[validators.Length(max=500)])
     date_due = DateField('Date Due')
 
 
 class AddComment(Form):
-    comment = StringField('Comment', validators=[DataRequired()])
+    text = StringField('Comment', validators=[DataRequired()])

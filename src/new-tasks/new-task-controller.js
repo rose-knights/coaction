@@ -1,8 +1,8 @@
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/new-task', {
+    templateUrl: 'static/new-tasks/new-task.html',
     controller: 'NewTaskCtrl',
-    controllerAs: 'vm',
-    templateUrl: 'static/new-tasks/new-task.html'
+    controllerAs: 'vm'
   });
 }]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
 

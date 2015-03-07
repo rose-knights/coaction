@@ -1,10 +1,10 @@
-from flask import Blueprint, flash, jsonify, request
+from flask import Blueprint, flash, jsonify, request, session
 from datetime import datetime
-from flask.ext.login import login_user, logout_user
-from flask.ext.login import login_required, current_user
+from flask.ext.login import (login_user, logout_user, login_required,
+                             current_user)
 
 from .forms import LoginForm, RegistrationForm, AddTask, AddComment
-from .models import Task, Comment
+from .models import Task, Comment, User
 from .extensions import db, hasher
 
 coaction = Blueprint("coaction", __name__, static_folder="./static")
@@ -15,18 +15,17 @@ def index():
     return coaction.send_static_file("index.html")
 
 
-@coaction.route("/login/<user_id>", methods=['POST'])
-def login_user(user_id):
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.get_or_404(user_id)
+@coaction.route("/login/", methods=['POST'])
+def login():
+    data = request.get_json()
+    form = LoginForm(data=data, formdata=None, csrf_enabled=False)
+    if form.validate():
+        user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            return True
+            return jsonify(user.to_dict()), 200
         else:
             return "Incorrect username or password", 401
-    print('raw: ', form.errors)
-    print('jsonified: ', jsonify(form.errors))
     return jsonify(form.errors)
 
 
@@ -119,6 +118,8 @@ def edit_task(task_id):
     """Method: PUT
        Updates the fields of a single task and stores changes in the
        database"""
+    import pdb
+    pdb.set_trace()
     data = request.get_json()
     task = Task.query.filter_by(id=hasher.decode(task_id)[0]).first()
     task.name = data["name"]

@@ -66,6 +66,14 @@ def list_all_tasks():
     return jsonify(tasks=tasks), 200
 
 
+@coaction.route("/tasks/incomplete")
+def view_incomplete_tasks():
+    tasks = Task.query.filter_by(date_completed=None).all()
+    tasks = [task.to_dict() for task in tasks]
+
+    return jsonify(tasks=tasks)
+
+
 @coaction.route("/tasks/", methods=["POST"])
 def add_task():
     """Method: POST

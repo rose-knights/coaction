@@ -1,10 +1,16 @@
-<h1>Add a new task</h1>
+<div class="contain">
 
-<form class="new-task-form" ng-submit="vm.addTask()">
+  <h2 class="new-task-head">New</h2>
 
-  <input type="text" ng-model="vm.task.name" placeholder="name">
-  <input type="text" ng-model="vm.task.description" placeholder="description">
-  <input type="text" ng-model="vm.task.date_due" placeholder="due date">
-  <button type="submit">Add Task</button>
+  <form class="new-task-form" ng-submit="vm.addTask()">
 
-</form>
+    <input type="text" class="textarea new-input" ng-model="vm.task.name" placeholder="name">
+
+    <input type="text" class="textarea new-input"  ng-model="vm.task.description" placeholder="description">
+
+    <input type="text" class="textarea new-input"  ng-model="vm.task.date_due" placeholder="due date">
+    <button class="add" type="submit">+</button>
+
+  </form>
+
+</div>

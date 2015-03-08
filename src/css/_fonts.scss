@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "fontastic";
+  src:url("css/fonts/fontastic.eot");
+  src:url("css/fonts/fontastic.eot?#iefix") format("embedded-opentype"),
+    url("cssfonts/fontastic.woff") format("woff"),
+    url("/fonts/fontastic.ttf") format("truetype"),
+    url("/fonts/fontastic.svg#fontastic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+[data-icon]:before {
+  font-family: "fontastic" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "fontastic" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-down-open-big:before {
+  content: "a";
+}
+.icon-left-open-big:before {
+  content: "b";
+}
+.icon-plus:before {
+  content: "c";
+}
+.icon-key:before {
+  content: "d";
+}
+.icon-pencil:before {
+  content: "e";
+}
+.icon-feather:before {
+  content: "f";
+}
+.icon-eye:before {
+  content: "g";
+}
+.icon-edit-write:before {
+  content: "h";
+}
+.icon-check-mark-2:before {
+  content: "i";
+}
+.icon-check-mark:before {
+  content: "j";
+}
+.icon-square-line:before {
+  content: "k";
+}
+.icon-hourglass:before {
+  content: "l";
+}
+.icon-calendar:before {
+  content: "m";
+}
+.icon-pin:before {
+  content: "n";
+}
+.icon-clipboard:before {
+  content: "o";
+}
+.icon-cancel:before {
+  content: "p";
+}
+.icon-page-search:before {
+  content: "q";
+}
+.icon-list-number:before {
+  content: "r";
+}
+.icon-id-card:before {
+  content: "s";
+}
+.icon-user:before {
+  content: "t";
+}
+.icon-user-outline:before {
+  content: "u";
+}
+.icon-users:before {
+  content: "v";
+}
+.icon-users-outline:before {
+  content: "w";
+}
+.icon-magnifying-glass:before {
+  content: "x";
+}

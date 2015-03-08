@@ -83,7 +83,7 @@ def add_task():
     data = request.get_json()
     form = AddTask(data=data, formdata=None, csrf_enabled=False)
     if form.validate():
-        new_task = Task(owner_id=1,
+        new_task = Task(owner_id=current_user.id,
                         name=data["name"],
                         status="to_do",
                         date_added=datetime.today().date(),
@@ -116,7 +116,7 @@ def add_comment(task_id):
     data = request.get_json()
     form = AddComment(data=data, formdata=None, csrf_enabled=False)
     if form.validate():
-        comment = Comment(owner_id=1,
+        comment = Comment(owner_id=current_user.id,
                           task_id=hasher.decode(task_id)[0],
                           date=datetime.now(),
                           text=data["text"])
@@ -178,3 +178,12 @@ def delete_task(task_id):
     db.session.delete(task)
     db.session.commit()
     return "{} Successfully Deleted".format(task_id), 200
+
+
+@coaction.route("/users/")
+def list_users():
+    """Method: GET
+       Return a list of all registered users."""
+    users = User.query.all()
+    users = [user.to_dict() for user in users]
+    return jsonify(users=users)

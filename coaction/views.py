@@ -61,7 +61,7 @@ def logout():
 @coaction.route("/tasks/")
 def list_all_tasks():
     """Return jsonified list of all tasks for a user."""
-    tasks = Task.query.all()
+    tasks = Task.query.filter_by(owner_id=current_user.id)
     tasks = [task.to_dict() for task in tasks]
 
     return jsonify(tasks=tasks), 200
@@ -183,7 +183,14 @@ def delete_task(task_id):
 @coaction.route("/users/")
 def list_users():
     """Method: GET
+<<<<<<< HEAD
        Return a list of all registered users."""
     users = User.query.all()
     users = [user.to_dict() for user in users]
     return jsonify(users=users)
+=======
+       Returns list of all users"""
+    users = User.query.all()
+    users = [user.to_dict() for user in users]
+    return jsonify(users=users), 200
+>>>>>>> user_functionality

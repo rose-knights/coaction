@@ -109,10 +109,10 @@ app.factory('userService', ['$http', '$log', function ($http, $log) {
       console.log(data.tasks);
       return data.tasks;
     })
-    // .catch(function (error) {
-    //   $log.log(error);
-    //   throw error;
-    // });
+    .catch(function (error) {
+      $log.log(error);
+      throw error;
+    });
   }
 
   return {
@@ -130,11 +130,11 @@ app.factory('userService', ['$http', '$log', function ($http, $log) {
     },
 
     addUser: function (user) {
-      return post('/register/', user)
+      return post('/register/', user);
     },
 
-    logoutUser: function (user) {
-      return post('/logout/', user)
+    logoutUser: function () {
+      return post('/logout/');
     },
 
     removeUser: function (id) {
@@ -162,7 +162,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   // $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', ['$location', 'tasks', 'taskService', function ($location, tasks, taskService) {
+.controller('TaskCtrl', ['$location', 'tasks', 'taskService', 'userService', function ($location, tasks, taskService, userService) {
   var self = this;
 
   self.tasks = tasks;
@@ -187,6 +187,15 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.changeStatus = function (task, status) {
     task.status = status;
     taskService.updateTask(task.id, task);
+  }
+
+  self.logoutUser = function () {
+    alert('fire');
+    return userService.logoutUser().then(self.goToLoginPage());
+  }
+
+  self.goToLoginPage = function () {
+    $location.path('/login');
   }
 
 }]);
@@ -217,7 +226,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   self.addUser = function () {
     console.log(self.user);
-    userService.addUser(self.user);
+    userService.addUser(self.user).then(self.goToTasks());
   }
 
   self.goToTasks = function () {
@@ -250,7 +259,13 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(self.user);
+    return userService.loginUser(self.user).then(function () {
+      return self.goToTasks();
+    });
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
   }
 }]);
 

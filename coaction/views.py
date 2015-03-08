@@ -60,7 +60,7 @@ def logout():
 
 @coaction.route("/tasks/")
 def list_all_tasks():
-    tasks = Task.query.all()
+    tasks = Task.query.filter_by(owner_id=current_user.id)
     tasks = [task.to_dict() for task in tasks]
 
     return jsonify(tasks=tasks), 200

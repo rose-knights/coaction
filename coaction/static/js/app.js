@@ -11,27 +11,6 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
-app.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/new-task', {
-    templateUrl: 'static/new-tasks/new-task.html',
-    controller: 'NewTaskCtrl',
-    controllerAs: 'vm'
-  });
-}]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
-
-  var self = this;
-  self.task = Task();
-
-  self.addTask = function () {
-    taskService.addTask(self.task).then(self.goToTasks);
-  }
-
-  self.goToTasks = function () {
-    $location.path('/my-tasks');
-  }
-
-}]);
-
 app.factory('taskService', ['$http', '$log', function($http, $log) {
 
   function get(url) {
@@ -280,6 +259,27 @@ app.factory('User', function () {
     };
   };
 });
+
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/new-task', {
+    templateUrl: 'static/new-tasks/new-task.html',
+    controller: 'NewTaskCtrl',
+    controllerAs: 'vm'
+  });
+}]).controller('NewTaskCtrl', ['$location', 'taskService', 'Task', function ($location, taskService, Task) {
+
+  var self = this;
+  self.task = Task();
+
+  self.addTask = function () {
+    taskService.addTask(self.task).then(self.goToTasks);
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
+  }
+
+}]);
 
 app.controller('Error404Ctrl', ['$location', function ($location) {
   var self = this;

@@ -1,11 +1,3 @@
-"""empty message
-
-Revision ID: 4968762fce
-Revises: None
-Create Date: 2015-03-08 11:43:49.508420
-
-"""
-
 # revision identifiers, used by Alembic.
 revision = '4968762fce'
 down_revision = None

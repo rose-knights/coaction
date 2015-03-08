@@ -1,8 +1,0 @@
-.my-head {
-  @include span-columns(4);
-  @include omega(3n);
-  font-weight: $light;
-  @include shift(4);
-  @include pad(.5em);
-  background-color: $alt-bg-color;
-}

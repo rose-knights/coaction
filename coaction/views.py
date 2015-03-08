@@ -183,14 +183,8 @@ def delete_task(task_id):
 @coaction.route("/users/")
 def list_users():
     """Method: GET
-<<<<<<< HEAD
        Return a list of all registered users."""
     users = User.query.all()
     users = [user.to_dict() for user in users]
-    return jsonify(users=users)
-=======
-       Returns list of all users"""
-    users = User.query.all()
-    users = [user.to_dict() for user in users]
     return jsonify(users=users), 200
->>>>>>> user_functionality
+    

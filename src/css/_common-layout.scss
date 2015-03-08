@@ -1,7 +1,68 @@
-.root-content {
-  padding: 2em;
+/*------------------------------------*\
+    #HEADER
+\*------------------------------------*/
+
+
+
+.app-header {
+  font-family: $font1;
+  text-align: center;
+  margin: .5em 0 .0;
 }
 
+.root-content {
+  @include pad();
+}
+
+
+/*------------------------------------*\
+    #NEW-TASK
+\*------------------------------------*/
+
+.contain {
+  @include outer-container;
+}
+.new-task-form {
+  @include span-columns(6);
+  @include shift(3);
+  background: blue;
+}
+
+.new-task-head {
+  @include span-columns(6);
+  @include shift(3);
+}
+
+.icons {
+  font-family: $icons;
+}
+
+.textarea {
+  font-size:16px;
+  border-color:#cccccc;
+  border-style:solid;
+  border-width:0px;
+  box-shadow: 3px 3px 1px 0px
+  rgba(173,173,173,.75);
+  margin: .5em;
+  padding: 0.5em 5.3em 0.5em .5em;
+  }
+    .textarea:focus { outline:none; }
+
+.add {
+  background-color: blue;
+  font-size: 30pt;
+  padding: 0 0.5em 0.5em;
+  float: right;
+}
+
+/*------------------------------------*\
+    #TASK
+\*------------------------------------*/
+
+.task-item {
+  @include pad();
+}
 .toolbar {
   background: #F4F4F4;
   padding: 1em;

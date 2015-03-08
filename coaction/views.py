@@ -60,6 +60,7 @@ def logout():
 
 @coaction.route("/tasks/")
 def list_all_tasks():
+    """Return jsonified list of all tasks for a user."""
     tasks = Task.query.filter_by(owner_id=current_user.id)
     tasks = [task.to_dict() for task in tasks]
 
@@ -68,6 +69,7 @@ def list_all_tasks():
 
 @coaction.route("/tasks/incomplete")
 def view_incomplete_tasks():
+    """Return a list of every incomplete task in the system"""
     tasks = Task.query.filter_by(date_completed=None).all()
     tasks = [task.to_dict() for task in tasks]
 

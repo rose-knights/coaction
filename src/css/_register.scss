@@ -1,0 +1,10 @@
+/*------------------------------------*\
+    #REGISTER
+\*------------------------------------*/
+
+.sign-input {
+  @include pad();
+  width: 310px;
+  @include margin(.5em);
+  font-family: $font1;
+}

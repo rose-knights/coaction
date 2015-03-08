@@ -278,7 +278,16 @@ button {
     margin-right: 0; }
 
 /*------------------------------------*\
-    #LOGIN
+    #REGISTER
+\*------------------------------------*/
+.sign-input {
+  padding: 2.35765%;
+  width: 310px;
+  margin: 0.5em;
+  font-family: 'Lato', sans-serif; }
+
+/*------------------------------------*\
+#LOGIN
 \*------------------------------------*/
 .container {
   max-width: 68em;
@@ -341,3 +350,7 @@ button {
   font-family: 'Lato', sans-serif; }
   .sign-up-button:last-child {
     margin-right: 0; }
+
+.error-head {
+  text-align: center;
+  font-weight: lighter; }

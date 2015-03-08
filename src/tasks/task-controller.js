@@ -13,7 +13,7 @@ app.config(['$routeProvider', function ($routeProvider) {
   // $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/my-tasks', routeDefinition);
 }])
-.controller('TaskCtrl', ['$location', 'tasks', 'taskService', function ($location, tasks, taskService) {
+.controller('TaskCtrl', ['$location', 'tasks', 'taskService', 'userService', function ($location, tasks, taskService, userService) {
   var self = this;
 
   self.tasks = tasks;
@@ -38,6 +38,15 @@ app.config(['$routeProvider', function ($routeProvider) {
   self.changeStatus = function (task, status) {
     task.status = status;
     taskService.updateTask(task.id, task);
+  }
+
+  self.logoutUser = function () {
+    alert('fire');
+    return userService.logoutUser().then(self.goToLoginPage());
+  }
+
+  self.goToLoginPage = function () {
+    $location.path('/login');
   }
 
 }]);

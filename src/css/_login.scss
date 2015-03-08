@@ -13,7 +13,7 @@
   font-weight: $light;
   @include shift(4);
   @include pad(.5em);
-  background-color: red;
+  background-color: $alt-bg-color;
 }
 .log-button {
   @include span-columns(6);

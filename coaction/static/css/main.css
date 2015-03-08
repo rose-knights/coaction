@@ -309,7 +309,7 @@ button {
   font-weight: lighter;
   margin-left: 34.11922%;
   padding: 0.5em;
-  background-color: red; }
+  background-color: #F4F4F4; }
   .log-head:last-child {
     margin-right: 0; }
   .log-head:nth-child(3n) {
@@ -354,3 +354,67 @@ button {
 .error-head {
   text-align: center;
   font-weight: lighter; }
+
+/*------------------------------------*\
+    #TASK
+\*------------------------------------*/
+.task-item {
+  padding: 2.35765%; }
+
+.toolbar {
+  background: #F4F4F4;
+  padding: 1em;
+  margin-bottom: 1.5em; }
+
+.main-nav {
+  background: #6067b0;
+  color: #FFF;
+  padding: 0 2em; }
+
+.app-icon {
+  color: inherit; }
+
+.app-icon:before {
+  content: 'b';
+  font-family: 'fontastic';
+  display: inline-block;
+  font-size: 2.5em;
+  padding-right: 0.5rem;
+  vertical-align: middle;
+  -webkit-transform: rotate(-10deg);
+  transform: rotate(-10deg); }
+
+/*------------------------------------*\
+    #MY-TASK
+\*------------------------------------*/
+.my-head {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 40.29137%;
+  margin-right: 0;
+  font-weight: lighter;
+  margin-left: 6.39735%;
+  padding: 0.5em;
+  background-color: #F4F4F4; }
+  .my-head:last-child {
+    margin-right: 0; }
+
+.add-button {
+  float: right;
+  padding: 0;
+  margin-right: .5em; }
+
+.remove-task-btn {
+  float: right;
+  padding: 0;
+  margin-right: .5em; }
+
+.task-info {
+  background-color: #4F9EE5;
+  padding: 2.35765%;
+  font-size: 16pt; }
+
+.task-status {
+  padding: 2.35765%;
+  margin-left: 17.05961%; }

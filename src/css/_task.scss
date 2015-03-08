@@ -30,3 +30,38 @@
   vertical-align: middle;
   transform: rotate(-10deg);
 }
+
+/*------------------------------------*\
+    #MY-TASK
+\*------------------------------------*/
+
+.my-head {
+  @include span-columns(5);
+  @include omega();
+  font-weight: $light;
+  @include shift(.75);
+  @include pad(.5em);
+  background-color: $alt-bg-color;
+}
+.add-button {
+  float: right;
+  padding: 0;
+  margin-right: .5em;
+}
+
+.remove-task-btn {
+  float: right;
+  padding: 0;
+  margin-right: .5em;
+}
+
+.task-info {
+  background-color: $alt-bold-color;
+  @include pad();
+  font-size: 16pt;
+}
+
+.task-status {
+  @include pad();
+  @include shift(2);
+}

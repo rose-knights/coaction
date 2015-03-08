@@ -217,7 +217,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   self.addUser = function () {
     console.log(self.user);
-    userService.addUser(self.user);
+    userService.addUser(self.user).then(self.goToTasks());
   }
 
   self.goToTasks = function () {
@@ -250,7 +250,19 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(self.user);
+    return userService.loginUser(self.user).then(self.goToTasks());
+  }
+
+  self.logoutUser = function (user) {
+    return userService.logoutUser(self.user).then(self.goToLoginPage());
+  }
+
+  self.goToLoginPage = function () {
+    $location.path('');
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
   }
 }]);
 

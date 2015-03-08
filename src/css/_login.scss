@@ -1,0 +1,41 @@
+/*------------------------------------*\
+#LOGIN
+\*------------------------------------*/
+.container {
+  @include outer-container;
+}
+.info-holder {
+  padding: 1em 0;
+}
+.log-head {
+  @include span-columns(4);
+  @include omega(3n);
+  font-weight: $light;
+  @include shift(4);
+  @include pad(.5em);
+  background-color: $alt-bg-color;
+}
+.log-button {
+  @include span-columns(6);
+  @include shift(3);
+  @include pad();
+  font-size: 16pt;
+  font-family: $font1;
+  float: none;
+}
+.sign-in-form {
+  @include pad();
+}
+.log-input {
+  @include pad();
+  width: 310px;
+  @include margin(.5em);
+  font-family: $font1;
+}
+.sign-up-button {
+  @include span-columns(6);
+  @include pad();
+  @include shift(3);
+  font-size: 16pt;
+  font-family: $font1;
+}

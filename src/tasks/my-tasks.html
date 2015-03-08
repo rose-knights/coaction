@@ -1,19 +1,53 @@
-<h2>My Tasks</h2>
+<div classs="container">
+  <div class="info-holder">
 
-<button class="add-button" ng-click="vm.addTaskPage()">+</button>
+    <div class="my-head">
+      <h2>My Tasks<button class="add-button" ng-click="vm.addTaskPage()">+</button></h2>
+      <ul>
+        <li class="task-item" ng-repeat="task in vm.tasks">
 
-<ul>
-  <li class="task-item" ng-repeat="task in vm.tasks">
-    <div class="task-info">
-      <span class="task-name">{{task.name}}</span>
-      <!-- <span class="task-description">{{task.description}}</span> -->
-      <span class="task-date-due">{{task.date_due}}</span>
-      <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
+          <div class="task-info">
+            <span class="task-name">{{task.name}}</span>
+            <!-- <span class="task-description">{{task.description}}</span> -->
+            <span class="task-date-due">{{task.date_due}}</span>
+            <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
+
+        <div class ="task-status">
+          <button ng-click="vm.changeStatus(task.id)">To Do</button>
+          <button ng-click="vm.changeStatus(task.id)">Doing</button>
+          <button ng-click="vm.changeStatus(task.id)">Done</button>
+        </div>
+      </div>
+
+        </li>
+      </ul>
+
+
     </div>
-  <div class ="task-status">
-    <button ng-click="vm.changeStatus(task, 'to_do')">To Do</button>
-    <button ng-click="vm.changeStatus(task, 'doing')">Doing</button>
-    <button ng-click="vm.changeStatus(task, 'done')">Done</button>
+    <!-- dummy placeholder for group tasks, you can comment it out -->
+    <div class="my-head">
+      <h2>Group Tasks<button class="add-button" ng-click="vm.addTaskPage()">+</button></h2>
+
+      <ul>
+        <li class="task-item" ng-repeat="task in vm.tasks">
+
+          <div class="task-info">
+            <span class="task-name">{{task.name}}</span>
+            <!-- <span class="task-description">{{task.description}}</span> -->
+            <span class="task-date-due">{{task.date_due}}</span>
+            <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
+
+        <div class ="task-status">
+          <button ng-click="vm.changeStatus(task.id)">To Do</button>
+          <button ng-click="vm.changeStatus(task.id)">Doing</button>
+          <button ng-click="vm.changeStatus(task.id)">Done</button>
+        </div>
+      </div>
+
+        </li>
+      </ul>
+
+
+    </div>
   </div>
-  </li>
-</ul>
+</div>

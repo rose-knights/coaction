@@ -61,7 +61,7 @@ def logout():
 @coaction.route("/tasks/")
 def list_all_tasks():
     """Return jsonified list of all tasks for a user."""
-    tasks = Task.query.all()
+    tasks = Task.query.filter_by(owner_id=current_user.id)
     tasks = [task.to_dict() for task in tasks]
 
     return jsonify(tasks=tasks), 200
@@ -186,4 +186,14 @@ def list_users():
        Return a list of all registered users."""
     users = User.query.all()
     users = [user.to_dict() for user in users]
-    return jsonify(users=users)
+    return jsonify(users=users), 200
+
+
+@coaction.route("/tasks/<task_id>/reassign", methods=["PUT"])
+def change_owner(task_id):
+    """Reassign the task to another user"""
+    data = request.get_json()
+    task = Task.query.get_or_404(hasher.decode(task_id)[0])
+    task.owner_id = data["id"]
+    db.session.commit()
+    return jsonify(task.to_dict()), 200

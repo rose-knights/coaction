@@ -13,9 +13,9 @@
             <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
 
         <div class ="task-status">
-          <button ng-click="vm.changeStatus(task.id)">To Do</button>
-          <button ng-click="vm.changeStatus(task.id)">Doing</button>
-          <button ng-click="vm.changeStatus(task.id)">Done</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">To Do</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">Doing</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">Done</button>
         </div>
       </div>
 
@@ -38,9 +38,9 @@
             <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
 
         <div class ="task-status">
-          <button ng-click="vm.changeStatus(task.id)">To Do</button>
-          <button ng-click="vm.changeStatus(task.id)">Doing</button>
-          <button ng-click="vm.changeStatus(task.id)">Done</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">To Do</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">Doing</button>
+          <button class="stat-button" ng-click="vm.changeStatus(task.id)">Done</button>
         </div>
       </div>
 
@@ -50,4 +50,8 @@
 
     </div>
   </div>
+  </li>
+</ul>
+
+<button class="log-out-btn" ng-click="vm.logoutUser()">Log Out</button>
 </div>

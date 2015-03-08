@@ -47,21 +47,42 @@
   float: right;
   padding: 0;
   margin-right: .5em;
+  background-color: $alt-bg-color;
+  color: $type-dark;
+  font-weight: $light;
+
 }
 
 .remove-task-btn {
   float: right;
   padding: 0;
   margin-right: .5em;
+  background-color: $input-border-color;
+  color: $type-dark;
+  font-weight: $light;
+
 }
 
 .task-info {
-  background-color: $alt-bold-color;
+  background-color: $input-border-color;
   @include pad();
   font-size: 16pt;
 }
 
 .task-status {
-  @include pad();
+  padding-top: 1em;
   @include shift(2);
+  color: white
+}
+
+.stat-button {
+  @include pad();
+  @include shift(1);
+  font-family: $font1;
+  font-size: 10pt;
+  float: none;
+  background-color: $type-light;
+  color: $type-dark;
+  font-weight: $light;
+  margin-top: .5em;
 }

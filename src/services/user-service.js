@@ -22,10 +22,10 @@ app.factory('userService', ['$http', '$log', function ($http, $log) {
       console.log(data.tasks);
       return data.tasks;
     })
-    // .catch(function (error) {
-    //   $log.log(error);
-    //   throw error;
-    // });
+    .catch(function (error) {
+      $log.log(error);
+      throw error;
+    });
   }
 
   return {
@@ -43,11 +43,11 @@ app.factory('userService', ['$http', '$log', function ($http, $log) {
     },
 
     addUser: function (user) {
-      return post('/register/', user)
+      return post('/register/', user);
     },
 
-    logoutUser: function (user) {
-      return post('/logout/', user)
+    logoutUser: function () {
+      return post('/logout/');
     },
 
     removeUser: function (id) {

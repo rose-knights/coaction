@@ -22,20 +22,35 @@
   font-size: 16pt;
   font-family: $font1;
   float: none;
+  background-color: $button-color;
+  color: $type-light;
+  font-weight: $light;
+  margin-top: .5em;
 }
 .sign-in-form {
   @include pad();
 }
+
 .log-input {
   @include pad();
   width: 310px;
   @include margin(.5em);
   font-family: $font1;
-}
-.sign-up-button {
-  @include span-columns(6);
-  @include pad();
-  @include shift(3);
-  font-size: 16pt;
-  font-family: $font1;
+  font-size:16px;
+  border-color:$input-border-color;
+  color: $type-dark;
+  border-style:solid;
+  border-width:2px;
+  box-shadow: 3px 3px 1px 0px
+  rgba(173,173,173,.75);
+  margin: .5em;
+  padding: 0.5em 5.3em 0.5em .5em;
+  }
+    .log-input:focus { outline:none; }
+
+.add {
+  background-color: blue;
+  font-size: 30pt;
+  padding: 0 0.5em 0.5em;
+  float: right;
 }

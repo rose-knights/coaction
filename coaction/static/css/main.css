@@ -144,7 +144,7 @@ body {
   font-family: 'Lato', sans-serif;
   line-height: 1.4em;
   background: white;
-  color: #444; }
+  color: black; }
 
 h1 {
   font-size: 36pt;
@@ -188,7 +188,7 @@ td {
 
 input, textarea {
   font-size: 1em;
-  border: 1px solid #DDD;
+  border: 1px solid #bd987c;
   padding: 0.25em; }
 
 button {
@@ -196,7 +196,7 @@ button {
   padding: 0.25em 0.75em;
   border: 0;
   background: #54CC14;
-  color: white;
+  color: #f8cece;
   font-size: 1em; }
 
 /*------------------------------------*\
@@ -215,9 +215,10 @@ button {
 \*------------------------------------*/
 .textarea {
   font-size: 16px;
-  border-color: #cccccc;
+  border-color: #bd987c;
+  color: black;
   border-style: solid;
-  border-width: 0px;
+  border-width: 2px;
   box-shadow: 3px 3px 1px 0px rgba(173, 173, 173, 0.75);
   margin: .5em;
   padding: 0.5em 5.3em 0.5em .5em; }
@@ -241,7 +242,7 @@ button {
 
 .main-nav-link:hover {
   background: #54CC14;
-  color: white; }
+  color: #f8cece; }
 
 .main-nav-link.active {
   background: #4d5196; }
@@ -309,7 +310,7 @@ button {
   font-weight: lighter;
   margin-left: 34.11922%;
   padding: 0.5em;
-  background-color: #F4F4F4; }
+  background-color: #e45264; }
   .log-head:last-child {
     margin-right: 0; }
   .log-head:nth-child(3n) {
@@ -326,7 +327,11 @@ button {
   padding: 2.35765%;
   font-size: 16pt;
   font-family: 'Lato', sans-serif;
-  float: none; }
+  float: none;
+  background-color: #535542;
+  color: #f9f9f7;
+  font-weight: lighter;
+  margin-top: .5em; }
   .log-button:last-child {
     margin-right: 0; }
 
@@ -337,19 +342,24 @@ button {
   padding: 2.35765%;
   width: 310px;
   margin: 0.5em;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  border-color: #bd987c;
+  color: black;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 3px 3px 1px 0px rgba(173, 173, 173, 0.75);
+  margin: .5em;
+  padding: 0.5em 5.3em 0.5em .5em; }
 
-.sign-up-button {
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 48.82117%;
-  padding: 2.35765%;
-  margin-left: 25.58941%;
-  font-size: 16pt;
-  font-family: 'Lato', sans-serif; }
-  .sign-up-button:last-child {
-    margin-right: 0; }
+.log-input:focus {
+  outline: none; }
+
+.add {
+  background-color: blue;
+  font-size: 30pt;
+  padding: 0 0.5em 0.5em;
+  float: right; }
 
 .error-head {
   text-align: center;
@@ -396,25 +406,43 @@ button {
   font-weight: lighter;
   margin-left: 6.39735%;
   padding: 0.5em;
-  background-color: #F4F4F4; }
+  background-color: #e45264; }
   .my-head:last-child {
     margin-right: 0; }
 
 .add-button {
   float: right;
   padding: 0;
-  margin-right: .5em; }
+  margin-right: .5em;
+  background-color: #e45264;
+  color: black;
+  font-weight: lighter; }
 
 .remove-task-btn {
   float: right;
   padding: 0;
-  margin-right: .5em; }
+  margin-right: .5em;
+  background-color: #bd987c;
+  color: black;
+  font-weight: lighter; }
 
 .task-info {
-  background-color: #4F9EE5;
+  background-color: #bd987c;
   padding: 2.35765%;
   font-size: 16pt; }
 
 .task-status {
+  padding-top: 1em;
+  margin-left: 17.05961%;
+  color: white; }
+
+.stat-button {
   padding: 2.35765%;
-  margin-left: 17.05961%; }
+  margin-left: 8.5298%;
+  font-family: 'Lato', sans-serif;
+  font-size: 10pt;
+  float: none;
+  background-color: #f9f9f7;
+  color: black;
+  font-weight: lighter;
+  margin-top: .5em; }

@@ -1,10 +1,14 @@
-<h1>Log In</h1>
+<div class="container">
+  <div class="info-holder">
+    <div class="log-head">
+      <h2>Log In</h2>
+      <form class="sign-in-form" ng-submit="vm.loginUser()">
+        <input type="text" class="log-input" ng-model="vm.user.username" placeholder="username">
+        <input type="password" class="log-input" ng-model="vm.user.password" placeholder="password">
+        <button class="log-button" type="submit">Log In</button>
+      </form>
 
-<form class="user-sign-in" ng-submit="vm.loginUser()">
-  <input type="text" ng-model="vm.user.username" placeholder="username">
-  <input type="password" ng-model="vm.user.password" placeholder="password">
-  <button type="submit">Log In</button>
-</form>
-
-<h1>Sign Up</h1>
-<button ng-click="vm.addUserPage()">Sign Up</button>
+      <h2>Sign Up</h2>
+      <button class="sign-up-button" ng-click="vm.addUserPage()">Sign Up</button>
+    </div>
+  </div>

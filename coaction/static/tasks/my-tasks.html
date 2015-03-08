@@ -4,7 +4,6 @@
 
 <ul>
   <li class="task-item" ng-repeat="task in vm.tasks">
-<<<<<<< HEAD
     <div class="task-info">
       <span class="task-name">{{task.name}}</span>
       <!-- <span class="task-description">{{task.description}}</span> -->
@@ -12,18 +11,9 @@
       <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
     </div>
   <div class ="task-status">
-    <button ng-click="vm.changeStatus(task.id)">To Do</button>
-    <button ng-click="vm.changeStatus(task.id)">Doing</button>
-    <button ng-click="vm.changeStatus(task.id)">Done</button>
-  </div>
-=======
     <button ng-click="vm.changeStatus(task, 'to_do')">To Do</button>
     <button ng-click="vm.changeStatus(task, 'doing')">Doing</button>
     <button ng-click="vm.changeStatus(task, 'done')">Done</button>
-    <span class="task-name">{{task.name}}</span>
-    <!-- <span class="task-description">{{task.description}}</span> -->
-    <span class="task-date-due">{{task.date_due}}</span>
-    <button class="remove-task-btn" ng-click="vm.removeTask(task.id)">X</button>
->>>>>>> 56e812f4e1c6d708973a451379fbbbeaf7c66dfd
+  </div>
   </li>
 </ul>

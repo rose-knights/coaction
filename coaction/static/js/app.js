@@ -259,7 +259,9 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(self.user).then(self.goToTasks());
+    return userService.loginUser(self.user).then(function () {
+      return self.goToTasks();
+    });
   }
 
   self.goToTasks = function () {
@@ -280,7 +282,12 @@ app.factory('User', function () {
 });
 
 app.controller('Error404Ctrl', ['$location', function ($location) {
+  var self = this;
+
   this.message = 'Could not find: ' + $location.url();
+  self.goBack = function() {
+    location.reload();
+  }
 }]);
 
 //# sourceMappingURL=app.js.map

@@ -187,4 +187,13 @@ def list_users():
     users = User.query.all()
     users = [user.to_dict() for user in users]
     return jsonify(users=users), 200
-    
+
+
+@coaction.route("/tasks/<task_id>/reassign", methods=["PUT"])
+def change_owner(task_id):
+    """Reassign the task to another user"""
+    data = request.get_json()
+    task = Task.query.get_or_404(hasher.decode(task_id)[0])
+    task.owner_id = data["id"]
+    db.session.commit()
+    return jsonify(task.to_dict()), 200

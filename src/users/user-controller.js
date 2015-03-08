@@ -23,6 +23,12 @@ app.config(['$routeProvider', function ($routeProvider) {
   }
 
   self.loginUser = function (user) {
-    return userService.loginUser(self.user);
+    return userService.loginUser(self.user).then(function () {
+      return self.goToTasks();
+    });
+  }
+
+  self.goToTasks = function () {
+    $location.path('/my-tasks');
   }
 }]);

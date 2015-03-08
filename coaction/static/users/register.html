@@ -1,16 +1,17 @@
-
 <div class="container">
 
   <div class="info-holder">
     <div class="log-head">
       <h2 >Sign Up</h2>
       <form class="user-sign-up" ng-submit="vm.addUser(user)">
-        <input type="text" class="log-input" ng-model="vm.username" placeholder="username">
-        <input type="password" class="log-input" ng-model="vm.password" placeholder="password">
-        <input type="password" class="log-input" ng-model="vm.password_verification" placeholder="enter password again">
-        <input type="text" class="log-input" ng-model="vm.name" placeholder="first name">
-        <input type="email" class="log-input" ng-model="vm.email" placeholder="email">
-        <button type="submit" class="log-button">Sign Up</button>
+
+        <input type="text" class="log-input" ng-model="vm.user.username" placeholder="username">
+        <input type="password" class="log-input" ng-model="vm.user.password" placeholder="password">
+        <input type="password" class="log-input" ng-model="vm.user.password_verification" placeholder="enter password again">
+        <input type="text" class="log-input" ng-model="vm.user.name" placeholder="first name">
+        <input type="email" class="log-input" ng-model="vm.user.email" placeholder="email">
+        <button type="submit" class="sign-up-button">Sign Up</button>
+
       </form>
 
 

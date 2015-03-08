@@ -11,7 +11,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   self.addUser = function () {
     console.log(self.user);
-    userService.addUser(self.user);
+    userService.addUser(self.user).then(self.goToTasks());
   }
 
   self.goToTasks = function () {
